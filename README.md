@@ -1,8 +1,8 @@
 # Gameplan
 
-Project Lead: Chris Puskar 
-Scrum Master: Chris Nixon
-Developers: Sujay Patel, Arthur Mathies, Molly Lloyd
+- Project Lead: Chris Puskar 
+- Scrum Master: Chris Nixon
+- Developers: Sujay Patel, Arthur Mathies, Molly Lloyd
 
 
 ## Summary
