@@ -1,0 +1,12 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+logs/*
+!.gitkeep
+tmp
+.idea
+
+# Modules
+node_modules/
+client/app/bower_components/
+client/app/dist/

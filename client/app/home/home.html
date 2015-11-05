@@ -1,0 +1,101 @@
+
+<div id="home-page">
+
+  <nav class="navbar navbar-default map-navbar row site-selection">
+    <div class="container-fluid">
+      <div id="site-selection-nav">
+        <ul class="nav navbar-nav">
+        <li class="refresh-btn">
+            <a class="btn btn-default" type="button" ng-click="populateList(currentKeyword, selectedSport,  currentRankByFlag)">
+              <i class="fa fa-refresh"></i>
+            </a>
+            </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sports<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu sport">
+              <li class="sport-item" ng-repeat="(sport, keyword) in sports" ng-click="populateList(keyword, sport)"><a>{{ sport }}</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Date<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu sport">
+              <li><a>...</a></li>
+            </ul>
+          </li>
+          <li class="selected-sport">
+            <a>
+              <span class="{{ selectedSport }}"></span> {{ selectedSport }}
+            </a>
+          </li>
+
+        </ul>
+        <form name="change-location" class="navbar-form navbar-right address-selection" role="search" ng-submit="changeLocation(locationData)">
+          <div class="form-group">
+            <input id="location-search" type="text" class="form-control" placeholder="Change location..." ng-model="locationData" >
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="row map-site">
+
+    <div class="col-xs-8" id="map">
+    </div>
+
+    <div class="col-xs-4 site-update-container">
+
+      <div class="list-group">
+        <form class="search-form">
+          <input type="text" placeholder="Search" class="search-input form-control" ng-model="siteSearch">
+        </form>
+        <ul>
+          <p ng-show="!sitesResults.length" class="empty-list">No results found</p>
+          <li ng-repeat="elm in sitesResults | filter: siteSearch as results" class="site-list-elm" data-placeId="{{elm.place_id}}">
+            <p class="sitename" ng-click="siteListClick($index)"> {{elm.name}} </p>
+            <span class="user-checkins">
+              <i class="fa fa-user"></i>{{elm.checkins}}
+            </span>
+            <button class="checkin-button checkin btn" ng-show="!elm.checkedin" ng-click="siteCheckin(elm)"><i class="fa fa-square-o"></i></button>
+            <button class="checkin-button checkout btn" ng-show="elm.checkedin" ng-click="siteCheckout(elm)"><i class="fa fa-check-square-o"></i></button>
+            <span class="opening-info open-now" ng-show="{{elm.opening_hours.open_now}}">Open Now</span>
+            <span class="opening-info close-now" ng-show="{{elm.opening_hours.open_now === false}}">Closed</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu2gwna7foZrV4In4pDqfP9rLW7hPMLxY&libraries=places&callback=initMap"></script>
+
+
+<script>
+  function initMap() {
+    var scope = $('#map').scope();
+    scope.userfind();
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
+
+  // Google Address Autocomplete
+  function initialize() {
+    var input = document.getElementById('location-search');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      console.log(place.formatted_address);
+      document.getElementById('location-search').value = "" + place.formatted_address;
+    });
+  }
+
+</script>
+

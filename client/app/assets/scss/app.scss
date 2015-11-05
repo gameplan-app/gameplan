@@ -1,0 +1,20 @@
+// @import "reset";
+@import "bootstrap";
+@import "font-awesome";
+@import "variables";
+@import "header";
+@import "footer";
+@import "home";
+
+html {
+  background-color: $mainColor;
+  -webkit-font-smoothing: antialiased;
+  * {
+    box-sizing: border-box;
+  }
+}
+
+body {
+  background-color: $mainColor;
+}
+
