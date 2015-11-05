@@ -1,15 +1,15 @@
-// Unbalanced ()) Greenfield Project
+// A gameplan-app project
 // =============================================================================
 
-var express = require('express');        // bring in express
+var express = require('express'); // bring in express
 var bodyParser = require('body-parser'); // bring in body parser for parsing requests
-var utils = require('./config/utils.js');  // bring in our utilities file
-var passport = require('passport');  // auth via passport
-var FacebookStrategy = require('passport-facebook').Strategy;  // FB auth via passport
-var session = require('express-session');  // to enable user sessions
-var User = require('./models/userModel.js');  // our user schema
-var Site = require('./models/siteModel.js');  // our site schema
-var router = express.Router();           // create our Express router
+var utils = require('./config/utils.js'); // bring in our utilities file
+var passport = require('passport'); // auth via passport
+var FacebookStrategy = require('passport-facebook').Strategy; // FB auth via passport
+var session = require('express-session'); // to enable user sessions
+var User = require('./models/userModel.js'); // our user schema
+var Site = require('./models/siteModel.js'); // our site schema
+var router = express.Router(); // create our Express router
 var cookieParser = require('cookie-parser');
 
 
@@ -23,7 +23,9 @@ router.post('/checkout', utils.siteCheckout);
 
 // AUTH
 router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', {
+    failureRedirect: '/login'
+  }),
   function(req, res) {
     utils.fetchUserInfoFromFB(req, res);
   });
@@ -35,17 +37,19 @@ router.get('/auth/facebook',
     // function will not be called.
   });
 
-router.get('/userauth', passport.authenticate('facebook', { failureRedirect: '/login' }),
+router.get('/userauth', passport.authenticate('facebook', {
+    failureRedirect: '/login'
+  }),
   function(req, res) {
-   res.redirect('/');
- });
+    res.redirect('/');
+  });
 
-passport.use( new FacebookStrategy({  // request fields from facebook
-  profileFields: ['id', 'displayName', 'photos'],
-  clientID: '1664576320455716',
-  clientSecret: '018421cdfca61a8d10f6beacf9dabab4',
-  callbackURL: '/auth/facebook/callback',
-  enableProof: false
+passport.use(new FacebookStrategy({ // request fields from facebook
+    profileFields: ['id', 'displayName', 'photos'],
+    clientID: '1664576320455716',
+    clientSecret: '018421cdfca61a8d10f6beacf9dabab4',
+    callbackURL: '/auth/facebook/callback',
+    enableProof: false
   },
 
   function(accessToken, refreshToken, profile, done) {
@@ -56,11 +60,11 @@ passport.use( new FacebookStrategy({  // request fields from facebook
 ));
 
 router.get('/logout', function(req, res) {
-  req.session.destroy(function (err) {
+  req.session.destroy(function(err) {
     res.clearCookie('facebook');
     res.redirect('/');
   });
 });
 
 
-module.exports = router;  // export router for other modules to use
+module.exports = router; // export router for other modules to use

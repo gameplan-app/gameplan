@@ -1,5 +1,8 @@
+// A gameplan-app project
+// =============================================================================
+
 var mongoose = require('mongoose');
-var findOrCreate = require('mongoose-findorcreate');  // add findOrCreate functionality to Mongoose
+var findOrCreate = require('mongoose-findorcreate'); // add findOrCreate functionality to Mongoose
 
 var userSchema = new mongoose.Schema({
   user_fb_id: {

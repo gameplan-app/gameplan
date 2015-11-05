@@ -1,3 +1,6 @@
+// A gameplan-app project
+// =============================================================================
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -9,25 +12,25 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-        'client/app/**/*.js',
-        '!client/app/assets/js/*js',
-        '!client/app/bower_components/**/*js',
-        '!client/app/dist/**/*js'
+          'client/app/**/*.js',
+          '!client/app/assets/js/*js',
+          '!client/app/bower_components/**/*js',
+          '!client/app/dist/**/*js'
         ],
         dest: 'client/app/dist/js/app.concat.js'
       }
     },
 
-    sass: {                              // Task 
-      dist: {                            // Target 
-        options: {                       // Target options 
+    sass: { // Task 
+      dist: { // Target 
+        options: { // Target options 
           sourceMap: true,
           outputStyle: 'compressed'
-          // cacheLocation: 'app/assets/.sass-cache',
-          // style: 'compressed'
+            // cacheLocation: 'app/assets/.sass-cache',
+            // style: 'compressed'
         },
-        files: {                         // Dictionary of files 
-          'client/app/dist/css/app.css': 'client/app/assets/scss/app.scss',       // 'destination': 'source' 
+        files: { // Dictionary of files 
+          'client/app/dist/css/app.css': 'client/app/assets/scss/app.scss', // 'destination': 'source' 
         }
       }
     },
@@ -55,8 +58,8 @@ module.exports = function(grunt) {
         force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
-        'public/lib/**/*.js',
-        'public/dist/**/*.js'
+          'public/lib/**/*.js',
+          'public/dist/**/*.js'
         ]
       }
     },
@@ -86,25 +89,25 @@ module.exports = function(grunt) {
       view: {
         command: 'open http://localhost:8080/',
         options: {
-            execOptions: {
-                maxBuffer: 500 * 1024 // or Infinity
-            }
+          execOptions: {
+            maxBuffer: 500 * 1024 // or Infinity
+          }
         }
       },
-      server:{
+      server: {
         command: 'nodemon server/server.js'
       }
     }
 
   });
 
-grunt.loadNpmTasks('grunt-contrib-uglify');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-shell');
-grunt.loadNpmTasks('grunt-sass');
-// grunt.loadNpmTasks('grunt-contrib-sass'); // Removed to used grunt-sass
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-sass');
+  // grunt.loadNpmTasks('grunt-contrib-sass'); // Removed to used grunt-sass
 
 
 
@@ -132,13 +135,13 @@ grunt.loadNpmTasks('grunt-sass');
 
 
   // Open the HTML app file
-  grunt.registerTask('view', function () {
-    grunt.task.run([ 'shell:view' ]);
+  grunt.registerTask('view', function() {
+    grunt.task.run(['shell:view']);
   });
 
   // Start local server
-  grunt.registerTask('server', function () {
-    grunt.task.run([ 'shell:server' ]);
+  grunt.registerTask('server', function() {
+    grunt.task.run(['shell:server']);
   });
 
 
