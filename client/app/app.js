@@ -1,4 +1,4 @@
-// Unbalanced ()) Greenfield Project
+// A gameplan-app project
 // =============================================================================
 
 angular.module('myApp', [
@@ -9,23 +9,25 @@ angular.module('myApp', [
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-    .otherwise({redirectTo: '/home'});
+    .otherwise({
+      redirectTo: '/home'
+    });
 }])
 
 .controller('mainController', ['$scope', '$cookies', function($scope, $cookies) {
 
-// COOKIES
+  // COOKIES
   $scope.fbCookie = false;
-  var fbCookie = $cookies.get('facebook');  // get cookie from FB
+  var fbCookie = $cookies.get('facebook'); // get cookie from FB
 
   if (fbCookie) {
     fbCookie = fbCookie.split('j:');
-    fbCookie = JSON.parse(fbCookie[1]);  // parse the cookie
+    fbCookie = JSON.parse(fbCookie[1]); // parse the cookie
 
     var user = {
-      'fbUserId' : fbCookie.fbId,
-      'fbUserName' : fbCookie.fbUserName,
-      'fbPicture' : fbCookie.fbPicture
+      'fbUserId': fbCookie.fbId,
+      'fbUserName': fbCookie.fbUserName,
+      'fbPicture': fbCookie.fbPicture
     }
     $scope.user = user;
     $scope.fbCookie = true;
