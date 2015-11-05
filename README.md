@@ -1,19 +1,17 @@
-# GāME
+# Gameplan
 
-Unbalanced ()) team greenfield project
-
-Project Lead: Ryan James  
-Scrum Master: Aaron Spafford  
-Developers: Kevin Aujla, Renan Deswarte, Alex Kim
+Project Lead: Chris Puskar 
+Scrum Master: Chris Nixon
+Developers: Sujay Patel, Arthur Mathies, Molly Lloyd
 
 
 ## Summary
 
-GāME is a quick, easy way to find sports sites near you. After automatically locating your position or entering a custom address in the auto-fill search box, you can select from a variety of sports and view the sites closest to you. Click each site or marker to view more information about the site, and checkin to the site as well. Login via Facebook to store your favorite sports, sites, and checkins. And the site is fully functional on mobile as well!
+Gameplan is a quick, easy way to find sports sites near you. After automatically locating your position or entering a custom address in the auto-fill search box, you can select from a variety of sports and view the sites closest to you. Click each site or marker to view more information about the site, and checkin to the site as well. Login via Facebook to store your favorite sports, sites, and checkins. And the site is fully functional on mobile as well!
 
 
 ## Local Deployment
-Checkout project from github: https://github.com/unbalancedparens/greenfield
+Checkout project from github: https://github.com/gameplan-app/gameplan
 
 Build site locally:
 
