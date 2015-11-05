@@ -13,6 +13,7 @@
   "multistr": true,
   "eqnull": true,
   "expr": true,
+  "quotmark": "single",
   "asi": true,
   "immed": false,
   "latedef": false,
