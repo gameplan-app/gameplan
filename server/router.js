@@ -62,5 +62,4 @@ router.get('/logout', function(req, res) {
   });
 });
 
-
 module.exports = router;  // export router for other modules to use
