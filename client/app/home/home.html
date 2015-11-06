@@ -1,15 +1,13 @@
-
 <div id="home-page">
-
   <nav class="navbar navbar-default map-navbar row site-selection">
     <div class="container-fluid">
       <div id="site-selection-nav">
         <ul class="nav navbar-nav">
-        <li class="refresh-btn">
+          <li class="refresh-btn">
             <a class="btn btn-default" type="button" ng-click="populateList(currentKeyword, selectedSport,  currentRankByFlag)">
               <i class="fa fa-refresh"></i>
             </a>
-            </li>
+          </li>
           <li class="dropdown">
             <a class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sports<span class="caret"></span>
@@ -31,26 +29,20 @@
               <span class="{{ selectedSport }}"></span> {{ selectedSport }}
             </a>
           </li>
-
         </ul>
         <form name="change-location" class="navbar-form navbar-right address-selection" role="search" ng-submit="changeLocation(locationData)">
           <div class="form-group">
-            <input id="location-search" type="text" class="form-control" placeholder="Change location..." ng-model="locationData" >
+            <input id="location-search" type="text" class="form-control" placeholder="Change location..." ng-model="locationData">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
   </nav>
-
-
   <div class="row map-site">
-
     <div class="col-xs-8" id="map">
     </div>
-
     <div class="col-xs-4 site-update-container">
-
       <div class="list-group">
         <form class="search-form">
           <input type="text" placeholder="Search" class="search-input form-control" ng-model="siteSearch">
@@ -69,33 +61,25 @@
           </li>
         </ul>
       </div>
-
     </div>
-
   </div>
 </div>
-
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu2gwna7foZrV4In4pDqfP9rLW7hPMLxY&libraries=places&callback=initMap"></script>
-
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9-ymecHg0I2o_mDvvD39PxNv46yz2Gnc&libraries=places&callback=initMap"></script>
 <script>
-  function initMap() {
-    var scope = $('#map').scope();
-    scope.userfind();
-    google.maps.event.addDomListener(window, 'load', initialize);
-  }
+function initMap() {
+  var scope = $('#map').scope();
+  scope.userfind();
+  google.maps.event.addDomListener(window, 'load', initialize);
+}
 
-  // Google Address Autocomplete
-  function initialize() {
-    var input = document.getElementById('location-search');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener('place_changed', function() {
-      var place = autocomplete.getPlace();
-      console.log(place.formatted_address);
-      document.getElementById('location-search').value = "" + place.formatted_address;
-    });
-  }
-
+// Google Address Autocomplete
+function initialize() {
+  var input = document.getElementById('location-search');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    console.log(place.formatted_address);
+    document.getElementById('location-search').value = "" + place.formatted_address;
+  });
+}
 </script>
-
