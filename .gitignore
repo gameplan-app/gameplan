@@ -5,6 +5,7 @@ logs/*
 !.gitkeep
 tmp
 .idea
+.env
 
 #secrets
 server/config/dev-config.js
