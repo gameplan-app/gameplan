@@ -24,7 +24,7 @@ var siteSchema = new mongoose.Schema({
     day: {
       type: Date,
       required: false
-    }
+    },
     time: {
       type: Date,
       required: false
