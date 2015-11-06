@@ -20,6 +20,7 @@ router.post('/checkout', utils.siteCheckout);
 router.post('/reserve', utils.siteReserve);
 router.get('/reserve', utils.siteDayAvailability)
 
+
 // AUTH
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
@@ -45,8 +46,8 @@ router.get('/userauth', passport.authenticate('facebook', {
 
 passport.use(new FacebookStrategy({ // request fields from facebook
     profileFields: ['id', 'displayName', 'photos'],
-    clientID: '1664576320455716',
-    clientSecret: '018421cdfca61a8d10f6beacf9dabab4',
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET,
     callbackURL: '/auth/facebook/callback',
     enableProof: false
   },
