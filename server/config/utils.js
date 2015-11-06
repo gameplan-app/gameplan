@@ -10,6 +10,8 @@ var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
 var moment = require('moment'); // library for dealing with dates and times
 var _ = require('underscore');
+var nodemailer = require("nodemailer"); //email from node
+
 
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
@@ -25,11 +27,8 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbUserName": res.req.user.displayName,
     "fbPicture": res.req.user.photos[0].value,
   };
-
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
-
   exports.postUserInfo(fbUserInfo);
-
   res.redirect('/');
 };
 
@@ -163,3 +162,40 @@ exports.siteDayAvailability = function(req, res) {
     res.status(200).send({free_hours: free_hours});  
   })
 };
+
+//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
+
+exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address){
+
+//Setup Nodemail Transport
+var smtpTransport = nodemailer.createTransport("SMTP", {
+  service : "Gmail",
+  auth : {
+    user: "game.plan.schedule@gmail.com",
+    pass: "makersquare"
+  }
+});
+
+mailOpts = {
+  from : "game.plan.schedule@gmail.com",
+  to : email,
+  subject : "Gameplan Schedule on "+reservationDate+" at "+reservationTime+"!",
+  text : "Hi,"+
+          "\nYou have successfully reserved a court! Have fun!" +
+          "\n Court : " + court +
+          "\n When : "+ reservationTime + " on " + reservationDate +
+          "\n Where : " + address +
+          "\n"+
+          "Game Time!\n"+
+          "-Gameplan Team"
+};
+
+smtpTransport.sendMail(mailOpts, function(error){
+  if(error){
+    console.log(error);
+  }
+  else{
+    console.log("Email was sent!");
+  }
+});
+}
