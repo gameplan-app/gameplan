@@ -12,7 +12,7 @@ angular.module('gameplan', [
   $routeProvider.o
   $routeProvider
     .when('/home', {
-      templateUrlhome/home.html',
+      templateUrl: 'views/home/home.html',
       controller: 'homeCtrl'
     })
     .when('/reservation', {
