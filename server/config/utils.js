@@ -168,6 +168,7 @@ exports.siteDayAvailability = function(req, res) {
 
 //EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
+
 exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
@@ -190,13 +191,42 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
       "Game Time!\n" +
       "-Gameplan Team"
   };
+    smtpTransport.sendMail(mailOpts, function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email was sent!");
+      }
+    });
+  };
 
-  smtpTransport.sendMail(mailOpts, function(error) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email was sent!");
+exports.siteReserve = function(req, res) {
+  site.findAll = Q.bind(Site.find, Site)
+
+};
+
+exports.siteDayAvailability = function(req, res) {
+  var res_length = req.body.res_length || 1;
+  var free_hours = _.range(24);
+  siteFindAll = Q.bind(Site.find, Site);
+  siteFindAll({
+    'site': req.body.site_place_id,
+    'reservations.day': {
+      "$gte": moment(req.body.day).startOf('day'),
+      "$lte": moment(req.body.day).endOf('day')
     }
+  }, function(err, result) {
+    if (err) {
+      console.error(err);
+    }
+
+    _.each(result, function(reservation) {
+      var i = _.indexOf(free_hours, reservation.time)
+      if (i > 0) {
+        free_hours.splice(i, res_length);
+      }
+    });
+    return free_hours
   });
 };
 
