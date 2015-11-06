@@ -42,9 +42,10 @@ passport.deserializeUser(function(obj, done) {
 
 // DATABASE
 
-var mongoose = require('mongoose'); // enable Mongoose for db
-var mongodbUri = config.mongolab_uri // our DB URI
-var mongooseUri = uriUtil.formatMongoose(mongodbUri); // formatting for Mongoose
+var mongoose = require('mongoose');     // enable Mongoose for db
+var mongodbUri = config.mongolab_uri;  // our DB URI
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);  // formatting for Mongoose
+
 
 var mongooseOptions = { // MongoLabs-suggested socket options
   server: {
