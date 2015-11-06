@@ -6,6 +6,10 @@ logs/*
 tmp
 .idea
 
+#secrets
+server/config/dev-config.js
+.env
+
 # Modules
 node_modules/
 client/app/bower_components/
