@@ -8,6 +8,7 @@ var session = require('express-session'); // to enable user sessions
 var User = require('../models/userModel.js'); // our user schema
 var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
+var moment = require('moment') // library for dealing with dates and times
 
 
 // AUTH & USER
@@ -97,6 +98,26 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
-exports.siteReserve = function (req, res){
+
+exports.siteReserve = function(req, res) {
+
 
 };
+
+exports.siteDayAvailability = function(req, res) {
+  
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+

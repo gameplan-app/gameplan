@@ -21,6 +21,10 @@ var siteSchema = new mongoose.Schema({
   },
 
   reservations: [{
+    day: {
+      type: Date,
+      required: false
+    }
     time: {
       type: Date,
       required: false
@@ -29,7 +33,6 @@ var siteSchema = new mongoose.Schema({
       type: String,
       required: false 
     }
-
   }]
 });
 
