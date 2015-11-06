@@ -8,7 +8,7 @@ var session = require('express-session'); // to enable user sessions
 var User = require('../models/userModel.js'); // our user schema
 var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
-var moment = require('moment') // library for dealing with dates and times
+var moment = require('moment'); // library for dealing with dates and times
 
 
 // AUTH & USER
@@ -100,12 +100,20 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
 
 
 exports.siteReserve = function(req, res) {
-
+  site.findAll = Q.bind
 
 };
 
 exports.siteDayAvailability = function(req, res) {
-  
+  siteFindAll = Q.bind(Site.find, Site);
+  siteFindAll({
+    'reservations.day': {"$gte": moment(req.body.day).startOf('day'), "$lte":moment(req.body.day).endOf('day')}
+  }, function (err, result) {
+    if (err) {
+      console.error(err);
+    }
+  })
+
 
 };
 
