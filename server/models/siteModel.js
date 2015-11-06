@@ -31,7 +31,7 @@ var siteSchema = new mongoose.Schema({
     },
     user_id: {
       type: String,
-      required: false 
+      required: false
     }
   }]
 });
