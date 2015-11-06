@@ -9,7 +9,7 @@ var session = require('express-session'); // to enable user sessions
 var User = require('../models/userModel.js'); // our user schema
 var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
-var moment = require('moment') // library for dealing with dates and times
+var moment = require('moment'); // library for dealing with dates and times
 var nodemailer = require("nodemailer"); //email from node
 
 // AUTH & USER
@@ -102,40 +102,39 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
 
 //EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
-exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address){
+exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
 
-//Setup Nodemail Transport
-var smtpTransport = nodemailer.createTransport("SMTP", {
-  service : "Gmail",
-  auth : {
-    user: "game.plan.schedule@gmail.com",
-    pass: "makersquare"
-  }
-});
+  //Setup Nodemail Transport
+  var smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "Gmail",
+    auth: {
+      user: "game.plan.schedule@gmail.com",
+      pass: "makersquare"
+    }
+  });
 
-mailOpts = {
-  from : "game.plan.schedule@gmail.com",
-  to : email,
-  subject : "Gameplan Schedule on "+reservationDate+" at "+reservationTime+"!",
-  text : "Hi,"+
-          "\nYou have successfully reserved a court! Have fun!" +
-          "\n Court : " + court +
-          "\n When : "+ reservationTime + " on " + reservationDate +
-          "\n Where : " + address +
-          "\n"+
-          "Game Time!\n"+
-          "-Gameplan Team"
+  mailOpts = {
+    from: "game.plan.schedule@gmail.com",
+    to: email,
+    subject: "Gameplan Schedule on " + reservationDate + " at " + reservationTime + "!",
+    text: "Hi," +
+      "\nYou have successfully reserved a court! Have fun!" +
+      "\n Court : " + court +
+      "\n When : " + reservationTime + " on " + reservationDate +
+      "\n Where : " + address +
+      "\n" +
+      "Game Time!\n" +
+      "-Gameplan Team"
+  };
+
+  smtpTransport.sendMail(mailOpts, function(error) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email was sent!");
+    }
+  });
 };
-
-smtpTransport.sendMail(mailOpts, function(error){
-  if(error){
-    console.log(error);
-  }
-  else{
-    console.log("Email was sent!");
-  }
-});
-}
 
 
 exports.siteReserve = function(req, res) {
