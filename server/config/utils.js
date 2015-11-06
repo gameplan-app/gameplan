@@ -12,7 +12,6 @@ var moment = require('moment'); // library for dealing with dates and times
 var _ = require('underscore');
 var nodemailer = require("nodemailer"); //email from node
 
-
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
   if (req.isAuthenticated()) {
