@@ -1,15 +1,22 @@
 // A gameplan-app project
 // =============================================================================
 
-var express = require('express');        // bring in express
-var bodyParser = require('body-parser');  // bring in body parser for parsing requests
-var router = require('./router.js');  // add link to our router file
-var session = require('express-session');  // to enable user sessions
-var passport = require('passport');  // auth via passport
-var FacebookStrategy = require('passport-facebook').Strategy;  // FB auth via passport
-var cookieParser = require('cookie-parser');  // parses cookies
-var uriUtil = require('mongodb-uri');  // util for Mongo URIs
+require('dotenv').config({path: '../.env'});
+var express = require('express'); // bring in express
+var bodyParser = require('body-parser'); // bring in body parser for parsing requests
+var router = require('./router.js'); // add link to our router file
+var session = require('express-session'); // to enable user sessions
+var passport = require('passport'); // auth via passport
+var FacebookStrategy = require('passport-facebook').Strategy; // FB auth via passport
+var cookieParser = require('cookie-parser'); // parses cookies
+var uriUtil = require('mongodb-uri'); // util for Mongo URIs
 var config = require('./config/dev-config.js');
+
+
+
+
+
+
 
 // SCHEMA / MODELS
 var User = require('./models/userModel.js');
