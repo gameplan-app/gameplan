@@ -5,6 +5,7 @@ logs/*
 !.gitkeep
 tmp
 .idea
+.env
 
 # Modules
 node_modules/
