@@ -25,6 +25,7 @@
     "mongodb-uri": "^0.9.7",
     "mongoose": "3.8",
     "mongoose-findorcreate": "^0.1.2",
+    "nodemailer": "0.7.1",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",
     "q": "^1.4.1"
