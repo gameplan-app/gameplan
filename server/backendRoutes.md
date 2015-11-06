@@ -8,7 +8,7 @@ $http({
   url: '/reserve',
   method: 'GET',
   // params is how you pass data on a get request with angular
-  params: {site_name: site_name, date: [MM, DD, YYYY]}
+  params: {site_name: site_name, date: 'MMDDYYYY'}
 })
 ```
 #### todo:
@@ -21,7 +21,8 @@ $http({
 $http({
   url: '/reserve',
   method: 'POST',
-  data: {site_name: sitename, username: reserving_username, date:[MM, DD, YYYY, HH]}
+  // put hours in army time aka 1pm === 13 :)
+  data: {site_name: sitename, username: reserving_username, date:'MMDDYYY', time:'HH'}
 })
 ```
 #### todo
