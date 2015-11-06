@@ -20,6 +20,7 @@ router.post('/checkout', utils.siteCheckout);
 router.post('/reserve', utils.siteReserve);
 router.get('/reserve', utils.siteDayAvailability)
 
+
 // AUTH
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
