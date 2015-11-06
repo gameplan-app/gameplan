@@ -15,6 +15,7 @@ var _ = require('underscore');
 >>>>>>> [feat] : errors for server to run
 var nodemailer = require("nodemailer"); //email from node
 
+
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
   if (req.isAuthenticated()) {
@@ -168,7 +169,6 @@ exports.siteDayAvailability = function(req, res) {
 //EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
 exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
-
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
     service: "Gmail",
@@ -177,7 +177,6 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
       pass: "makersquare"
     }
   });
-
   mailOpts = {
     from: "game.plan.schedule@gmail.com",
     to: email,
@@ -201,14 +200,4 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
   });
 };
 
-
-exports.siteReserve = function(req, res) {
-
-
-};
-
-exports.siteDayAvailability = function(req, res) {
-
-
-};
 
