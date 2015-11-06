@@ -25,13 +25,15 @@ var siteSchema = new mongoose.Schema({
       type: Date,
       required: false
     },
+
     time: {
       type: Date,
       required: false
     },
+
     user_id: {
       type: String,
-      required: false 
+      required: false
     }
   }]
 });

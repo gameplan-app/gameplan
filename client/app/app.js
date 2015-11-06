@@ -1,14 +1,24 @@
 // A gameplan-app project
 // =============================================================================
 
-angular.module('myApp', [
+angular.module('gameplan', [
   'ngRoute',
   'ngCookies',
-  'myApp.home'
+  'gameplan.home',
+  'gameplan.reservation'
 ])
 
 .config(['$routeProvider', function($routeProvider) {
+  $routeProvider.o
   $routeProvider
+    .when('/home', {
+      templateUrl: 'views/home/home.html',
+      controller: 'homeCtrl'
+    })
+    .when('/reservation', {
+      templateUrl: 'views/reservation/reservation.html',
+      controller: ''
+    })
     .otherwise({
       redirectTo: '/home'
     });
