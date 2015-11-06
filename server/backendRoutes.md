@@ -3,7 +3,7 @@
 ### requests checking for available times on a day:
 sent data must include site name (or ID?) and date angular request should look something like:
 
-```
+```js
 $http({
   url: '/reserve',
   method: 'GET',
@@ -18,7 +18,7 @@ $http({
 -----
 ### requests for making a reservation:
 
-```
+```js
 $http({
   url: '/reserve',
   method: 'POST',
