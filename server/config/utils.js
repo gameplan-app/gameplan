@@ -3,22 +3,14 @@
 
 var express = require('express'); // bring in express
 var bodyParser = require('body-parser'); // bring in body parser for parsing requests
-<<<<<<< HEAD
-var router = require('../router.js');  // connect to our router
-var session = require('express-session');  // to enable user sessions
-var User = require('../models/userModel.js');  // our user schema
-var Site = require('../models/siteModel.js');  // our site schema
-var Q = require('q');  // promises library
-var nodemailer = require("nodemailer"); //email from node
-=======
+
 var router = require('../router.js'); // connect to our router
 var session = require('express-session'); // to enable user sessions
 var User = require('../models/userModel.js'); // our user schema
 var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
 var moment = require('moment') // library for dealing with dates and times
-
->>>>>>> upstream/develop
+var nodemailer = require("nodemailer"); //email from node
 
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
