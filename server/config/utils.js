@@ -96,3 +96,7 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
     }
   });
 };
+
+exports.siteReserve = function (req, res){
+
+};

@@ -18,9 +18,22 @@ var siteSchema = new mongoose.Schema({
   checkins: {
     type: Number,
     required: false
-  }
+  },
 
+  reservations: [{
+    time: {
+      type: Date,
+      required: false
+    },
+    user_id: {
+      type: String,
+      required: false 
+    }
+
+  }]
 });
+
+
 
 siteSchema.plugin(findOrCreate);
 

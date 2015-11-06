@@ -15,11 +15,9 @@ var cookieParser = require('cookie-parser');
 
 // SITES
 router.post('/siteinfo', utils.postSiteInfo);
-
 router.post('/checkin', utils.siteCheckin);
-
 router.post('/checkout', utils.siteCheckout);
-
+router.post('/reserve', utils.siteReserve);
 
 // AUTH
 router.get('/auth/facebook/callback',

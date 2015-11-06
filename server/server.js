@@ -18,7 +18,6 @@ var Site = require('./models/siteModel.js');
 var app = express(); // define our app using express
 var port = process.env.PORT || 8080; // set our port
 
-<<<<<<< 38d1766149c273502cb8c9c158765a9b93e745fd
 app.use(bodyParser.urlencoded({
   extended: true
 })); // use bodyParser() for req body parsing
@@ -44,7 +43,7 @@ passport.deserializeUser(function(obj, done) {
 // DATABASE
 
 var mongoose = require('mongoose'); // enable Mongoose for db
-var mongodbUri = 'mongodb://ryan:gaaame@ds049104.mongolab.com:49104/gaaame_db'; // our DB URI
+var mongodbUri = config.mongolab_uri // our DB URI
 var mongooseUri = uriUtil.formatMongoose(mongodbUri); // formatting for Mongoose
 
 var mongooseOptions = { // MongoLabs-suggested socket options
@@ -78,6 +77,8 @@ app.use('/checkout', router);
 app.use('/auth/facebook', router);
 app.use('callback', router);
 
+app.use('/reserve', router);
+
 
 // SERVER INIT
 app.listen(port);
@@ -85,7 +86,6 @@ console.log('Unbalanced magic is happening on port ' + port);
 
 
 // DB TESTING - keep this! uncomment to test if db is connected
-
   // var Q = require('q');
   // var userCreate = Q.nbind(User.create, User);
   // var newUser = {
