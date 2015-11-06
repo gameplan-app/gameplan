@@ -3,16 +3,9 @@
 
 'use strict';
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('gameplan.home', [])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/home', {
-    templateUrl: 'home/home.html',
-    controller: 'homeController'
-  });
-}])
-
-.controller('homeController', ['$scope', '$log', '$http', function($scope, $log, $http) {
+.controller('homeCtrl', ['$scope', '$log', '$http', function($scope, $log, $http) {
 
   // $SCOPE VARIABLES
   $scope.map;
