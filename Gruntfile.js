@@ -13,6 +13,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'client/app/**/*.js',
+          'client/app/views/**/*.js',
           '!client/app/assets/js/*js',
           '!client/app/bower_components/**/*js',
           '!client/app/dist/**/*js'
@@ -49,6 +50,7 @@ module.exports = function(grunt) {
     jshint: {
       files: [
         'client/app/**/*.js',
+        'client/app/views/**/*.js',
         '!client/app/assets/js/*js',
         '!client/app/bower_components/**/*js',
         '!client/app/components/**/*js',
@@ -68,6 +70,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'client/app/**/*.js',
+          'client/app/views/**/*.js',
           '!client/app/assets/js/*js',
           '!client/app/bower_components/**/*js',
           '!client/app/components/**/*js',
