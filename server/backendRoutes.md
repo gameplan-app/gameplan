@@ -13,7 +13,7 @@ $http({
 ```
 #### todo:
 
-[ ] let me know how you want the response formatted -- an array of 2-hour windows? or something else? 
+- [ ] let me know how you want the response formatted -- an array of 2-hour windows? or something else? 
 
 -----
 ### requests for making a reservation:
@@ -26,5 +26,5 @@ $http({
 })
 ```
 #### todo
-[ ] let me know if there is any other data about the reservation you might want to add to the database from the user profile
-[ ] let me know if there's anything specific you want to be included in the response
+- [ ] let me know if there is any other data about the reservation you might want to add to the database from the user profile
+- [ ] let me know if there's anything specific you want to be included in the response
