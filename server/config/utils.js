@@ -14,6 +14,7 @@ var _ = require('underscore');
 =======
 >>>>>>> [feat] : errors for server to run
 var nodemailer = require("nodemailer"); //email from node
+var _ = require('underscore');
 
 
 // AUTH & USER
@@ -100,6 +101,39 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
+//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
+
+
+exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
+  //Setup Nodemail Transport
+  var smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "Gmail",
+    auth: {
+      user: "game.plan.schedule@gmail.com",
+      pass: "makersquare"
+    }
+  });
+  mailOpts = {
+    from: "game.plan.schedule@gmail.com",
+    to: email,
+    subject: "Gameplan Schedule on " + reservationDate + " at " + reservationTime + "!",
+    text: "Hi," +
+      "\nYou have successfully reserved a court! Have fun!" +
+      "\n Court : " + court +
+      "\n When : " + reservationTime + " on " + reservationDate +
+      "\n Where : " + address +
+      "\n" +
+      "Game Time!\n" +
+      "-Gameplan Team"
+  };
+    smtpTransport.sendMail(mailOpts, function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email was sent!");
+      }
+    });
+  };
 
 function addRes(req, res) {
   Site.findOneAndUpdate({'sitename': req.body.sitename},
@@ -167,37 +201,4 @@ exports.siteDayAvailability = function(req, res) {
   })
 };
 
-
-//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
-
-
-exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
-  //Setup Nodemail Transport
-  var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "Gmail",
-    auth: {
-      user: "game.plan.schedule@gmail.com",
-      pass: "makersquare"
-    }
-  });
-  mailOpts = {
-    from: "game.plan.schedule@gmail.com",
-    to: email,
-    subject: "Gameplan Schedule on " + reservationDate + " at " + reservationTime + "!",
-    text: "Hi," +
-      "\nYou have successfully reserved a court! Have fun!" +
-      "\n Court : " + court +
-      "\n When : " + reservationTime + " on " + reservationDate +
-      "\n Where : " + address +
-      "\n" +
-      "Game Time!\n" +
-      "-Gameplan Team"
-  };
-    smtpTransport.sendMail(mailOpts, function(error) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email was sent!");
-      }
-    });
-  };
+>>>>>>> [test]: tests passing for backend reservation system
