@@ -9,18 +9,13 @@ angular.module('gameplan', [
 ])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.o
   $routeProvider
     .when('/home', {
       templateUrl: 'views/home/home.html',
       controller: 'homeCtrl'
     }).when('/reservation/:place_id', {
-     templateUrl: 'views/reservation/reservation.html',
-     controller: ''
-   })
-    .when('/reservation', {
       templateUrl: 'views/reservation/reservation.html',
-      controller: ''
+      controller: 'reservationCtrl'
     })
     .otherwise({
       redirectTo: '/home'
