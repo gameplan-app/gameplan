@@ -7,11 +7,11 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     };
   $scope.loadTimes = function(){
     var date = $filter('date')($scope.dt, 'MMddyyyy')
-    reservationFactory.getTimes(date)
-      .then(function successCallback(response)){
-        console.log(
-      }
+    reservationFactory.getTimes(date, null, function(response){
+      console.log(response);
+    })
   }
+
   $scope.today();
   $scope.minDate = new Date();
   console.log($filter('date')($scope.dt, 'MMddyyyy'));
@@ -20,13 +20,17 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 .factory('reservationFactory', ['$http', function($http){
 
   var service = {};
-  service.getTimes = function(date, venue){
+  service.getTimes = function(date, venue, callback){
     $http({
       url: '/reserve',
       method: 'GET',
       // params is how you pass data on a get request with angular
-      params: {site_name: site_name, date: 'MMDDYYYY'}
-    })
+      params: {site_name: venue, date: date}
+    }).then(function successCallback(response){
+      callback(response)
+    }, function errorCallback(response) {
+      callback(response)
+    });
   }
   return service;
 }])
