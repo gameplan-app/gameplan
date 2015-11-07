@@ -36,7 +36,7 @@ describe('', function() {
           'date': '25112015',
           'time': 11
         })
-        .expect(203)
+        .expect(202)
         .expect(function (res) {
           Site.find({"sitename": "BBall Court"})
             .exec(function (err, site) {
@@ -47,8 +47,32 @@ describe('', function() {
         .end(done);
       });
 
-      it('returns available times from the database', function(done){
-        request(app)
+    it('returns array of times from the database', function(done){
+      request(app)
+        .get('/reserve')
+        .query({
+          date:'25112015',
+          sitename: "BBall Court"
+        })
+        .expect(200)
+        .expect(function (res){
+          expect(res.body.free_hours).to.be.instanceOf(Array);
+        })
+        .end(done);
+    });
+   
+    it('returns correct available times from the database', function(done){
+      request(app)
+        .post('/reserve')
+        .send({
+          'sitename': 'BBall Court',
+          'username': 'Molly',
+          'date': '25112015',
+          'time': 20
+        })
+        .expect(203)
+        .end(function(){
+          request(app)
           .get('/reserve')
           .query({
             date:'25112015',
@@ -56,12 +80,14 @@ describe('', function() {
           })
           .expect(200)
           .expect(function (res){
-            expect(res.body.free_hours).to.be.instanceOf(Array);
+            var test_res = res.body.free_hours.indexOf(20) === -1;
+            console.log("test result", test_res);
+            expect(test_res).to.be.true;
           })
           .end(done);
+        })
+    });
 
-      it('returns')
-      });
 
     // describe('With previously saved urls: ', function() {
 

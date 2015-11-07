@@ -92,7 +92,7 @@ console.log('Unbalanced magic is happening on port ' + port);
 
 
 // DB TESTING - keep this! uncomment to test if db is connected
-  var Q = require('q');
+  // var Q = require('q');
   // var userCreate = Q.nbind(User.create, User);
   // var newUser = {
   //  'user_fb_id' : 12345,
