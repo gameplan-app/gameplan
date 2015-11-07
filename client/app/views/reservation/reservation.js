@@ -16,6 +16,44 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   $scope.minDate = new Date();
   console.log($filter('date')($scope.dt, 'MMddyyyy'));
 
+//needed for buttons
+  $scope.checkModel = {
+    '9': false,
+    '10': false,
+    '11': false,
+    '12': false,
+    '1': false,
+    '2': false,
+    '3': false,
+    '4': false,
+    '5': false
+  };
+
+  $scope.checkResults = [];
+
+  //add available times to checkResults
+  $scope.$watchCollection('checkModel', function() {
+    $scope.checkResults = [];
+    angular.forEach($scope.checkModel, function(value, key) {
+      if (value) {
+        $scope.checkResults.push(key);
+      }
+    });
+  });
+
+  //disable times for buttons which are taken
+  $scope.takenHoursObj = {
+    '9': true
+  };
+
+  $scope.takenCheck = function(takenHours) {
+    //write into obj from array of hours which are taken
+    _.each(takenHours, function(item) {
+      $scope.takenHoursObj[item] = true;
+    });
+
+    return $scope.takenHoursObj;
+  };
 
 
 }])
@@ -38,5 +76,22 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
       callback(response)
     });
   }
+
+  // //send selected times to database
+  // service.sendTimes = function(date, venue, callback) {
+  //   $http({
+  //     url: '/reserve',
+  //     method: 'GET',
+  //     // params is how you pass data on a get request with angular
+  //     params: {
+  //       site_name: venue,
+  //       date: date
+  //     }
+  //   }).then(function successCallback(response) {
+  //     callback(response)
+  //   }, function errorCallback(response) {
+  //     callback(response)
+  //   });
+  // }
   return service;
 }])

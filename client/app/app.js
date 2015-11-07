@@ -14,9 +14,9 @@ angular.module('gameplan', [
       templateUrl: 'views/home/home.html',
       controller: 'homeCtrl'
     })
-    .when('/reservation', {
+    .when('/reservation/:place_id', {
       templateUrl: 'views/reservation/reservation.html',
-      controller: ''
+      controller: 'reservationCtrl'
     })
     .otherwise({
       redirectTo: '/home'
