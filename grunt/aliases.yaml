@@ -1,12 +1,14 @@
 # This file is defining various aliases for our tasks
 
 # Runs the 'prod' tasks when you run grunt on the command line.
+# To run type 'grunt' in command line
 default:
   description: 'Default (production) build'
   tasks:
     -prod
 
 # Runs the development tasks (but not image tasks!)
+# To run tpye 'grunt dev' in command line
 dev:
   description: 'Development Build'
   tasks:
@@ -14,12 +16,14 @@ dev:
     - 'concurrent:devSecond'
 
 # Runs the image tasks
+# To run type 'grunt img' in command line
 img:
   description: 'Image tasks'
   tasks:
     - 'concurrent:imgFirst'
 
 # Runs the development and image tasks
+# To run type 'grunt devimg' in command line
 devimg:
   description: 'Development build and image tasks'
   tasks:
