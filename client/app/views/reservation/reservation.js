@@ -7,7 +7,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     $scope.loadTimes();
   };
   $scope.loadTimes = function() {
-    var date = $filter('date')($scope.dt, 'MMddyyyy')
+    var date = $filter('date')($scope.dt, 'MMddyyyy');
     var venue = $location.url().split("/")[2];
     reservationFactory.getTimes(date, venue, function(response) {
       takenCheck(response.data.reserved_hours);
@@ -51,6 +51,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   var takenCheck = function(takenHours) {
     //write into obj from array of hours which are taken
+    $scope.takenHoursObj = {};
     _.each(takenHours, function(item) {
       $scope.takenHoursObj[item] = true;
     });
@@ -61,7 +62,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     var date = $filter('date')($scope.dt, 'MMddyyyy')
     var venue = $location.url().split("/")[2];
     reservationFactory.sendTimes(date, venue, $scope.checkResults, function(response) {
+      $scope.checkResults = [];
       console.log("successfuly reserved venue");
+      $location.path("/#/home");
     });
   }
 
@@ -93,8 +96,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     $http({
       url: '/reserve',
       method: 'POST',
-      // params is how you pass data on a get request with angular
-      params: {
+      data: {
         site_name: venue,
         date: date,
         time: time

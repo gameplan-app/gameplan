@@ -2,14 +2,9 @@
   Yeahhhh we killin it
   <span><a href='/#/home'>Cancel</a></span>
   <div>
-    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-change="loadTimes()"></uib-datepicker>
-    <pre>Selected date is: <em>{{dt | date:'MMddyyyy'}}</em></pre>
-    <button ng-click="printDate()">click</button>
+    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-click="loadTimes()"></uib-datepicker>
   </div>
   <div>
-	  <h4>Checkbox</h4>
-	  <pre>Model: {{checkModel}}</pre>
-	  <pre>Hours Selected: {{checkResults}}</pre>
 	  <div>
 	      <label class="btn btn-primary" ng-model="checkModel['9']"
 	      ng-class = "{ 'btn btn-primary disabled': takenHoursObj['9'] }" uib-btn-checkbox>9 AM</label>
@@ -38,5 +33,6 @@
 	      <label class="btn btn-primary" ng-model="checkModel['21']"
 	       ng-class = "{ 'btn btn-primary disabled': takenHoursObj['21']}"uib-btn-checkbox>9 PM</label>
 	  </div>
+    <a ng-click="submitReservation()">Reserve</a> 
   </div>
 </div>
