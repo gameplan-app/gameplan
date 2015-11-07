@@ -6,6 +6,8 @@ module.exports = {
   },
 
   main: [
-    'src/scripts/*.js'
+    '/client/app/views/**/*.js',
+    'client/app/app.js',
+    'server/**/*.js'
   ]
 };
