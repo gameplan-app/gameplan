@@ -137,74 +137,73 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 
 
 
-function addRes(req, res) {
+function addRes(place, date, time,user) {
   Site.findOneAndUpdate({
-      'site_place_id': req.body.site_name
+      'site_place_id': place
     },
     // add new reservation to existing site doc
-    {
-      $push: {
+    {$push: {
         "reservations": {
-          date: moment(req.body.date, "MMDDYYYY"),
-          time: req.body.time,
-          user_id: req.body.user_id
-        }
-      }
-    },
+          date: date,
+          time: time,
+          user_id: user
+    }}},
     // upsert: create if it doesn't already exist, new: return updated doc
-    {
-      upsert: true,
-      new: true
-    },
+    {upsert: true,new: true},
     function(err, result) {
       if (err) {
         console.error(err);
         res.status(400).send("error making reservation");
       }
-      res.status(202).send();
     })
 }
 
 exports.siteReserve = function(req, res) {
-  Site.find({
-      "site_place_id": req.body.site_name,
-      "reservations.date": moment(req.body.date, "MMDDYYYY"),
-      "reservations.time": req.body.time
-    })
-    .exec(function(err, result) {
-      if (result.length === 0) {
-        addRes(req, res);
-      } else {
-        res.status(202).send("there is already a reservation at that time");
-      }
-    });
+  req.body.time.forEach(function (time, i){
+    Site.find({
+        "site_place_id": req.body.site_name,
+        "reservations.date": moment(req.body.date, "MMDDYYYY"),
+        "reservations.time": time
+      })
+      .exec(function(err, result) {
+        if (err) console.error(err);
+        if (result.length === 0) {
+          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id);
+          if (i === (req.body.time.length - 1)) {
+            res.status(203).send();
+          }
+        } else {
+          res.status(202).send("there is already a reservation at time" + time);
+        }
+      });
+  })
+  
 };
 
 exports.siteDayAvailability = function(req, res) {
-  console.log("availability req", req.query)
   var findQuery = {
     'site_place_id': req.query.site_name,
     'reservations.date': moment(req.query.date, "MMDDYYYY")
   }
   var res_length = req.query.res_length || 1;
-  var free_hours = _.range(24);
+  var reserved_hours = [];
   Site.find(findQuery).exec(function(err, result) {
     if (err) {
       console.error(err);
       res.status(401).send("error getting available times");
     }
-    console.log("result fron site day availability", result);
+    // console.log("result fron site day availability", result);
     if (result[0] !== undefined) {
       _.each(result[0].reservations, function(reservation) {
-        var i = _.indexOf(free_hours, reservation.time)
-        if (i > 0) {
-          free_hours.splice(i, res_length);
+        var i = _.indexOf(reserved_hours, reservation.time)
+        if (i < 0) {
+          reserved_hours.push(reservation.time);
         }
       });
     }
     
     res.status(200).send({
-      free_hours: free_hours
+      reserved_hours: reserved_hours
     });
   })
 };

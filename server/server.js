@@ -86,7 +86,7 @@ module.exports = {
   db: db
 };
 // SERVER INIT
-app.listen(port);
+// app.listen(port);
 
 console.log('Unbalanced magic is happening on port ' + port);
 

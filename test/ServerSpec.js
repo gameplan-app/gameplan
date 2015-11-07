@@ -18,10 +18,10 @@ describe('', function() {
       .get('/logout')
       .end(function(err, res) {
 
-        // Delete objects from db so they can be created later for the test
-        // Site.remove({
-        //   sitename: 'BBall Court'
-        // }).exec();
+    // Delete objects from db so they can be created later for the test
+        Site.remove({
+          sitename: 'BBall Court'
+        }).exec();
 
         done();
       });
@@ -31,17 +31,17 @@ describe('', function() {
       request(app)
         .post('/reserve')
         .send({
-          'sitename': 'BBall Court',
-          'username': 'Molly',
-          'date': '25112015',
-          'time': 11
+          'site_name': 'BBall Court',
+          'user_id': 'Molly',
+          'date': '11252015',
+          'time': [11]
         })
         .expect(202)
         .expect(function (res) {
-          Site.find({"sitename": "BBall Court"})
+          Site.find({"site_place_id": "BBall Court"})
             .exec(function (err, site) {
               if(err) {console.error(err)};
-              expect(site[0].sitename).to.equal("BBall Court");
+              expect(site[0].site_place_id).to.equal("BBall Court");
             })
         })
         .end(done);
@@ -51,12 +51,12 @@ describe('', function() {
       request(app)
         .get('/reserve')
         .query({
-          date:'25112015',
-          sitename: "BBall Court"
+          date:'11252015',
+          site_name: "BBall Court"
         })
         .expect(200)
         .expect(function (res){
-          expect(res.body.free_hours).to.be.instanceOf(Array);
+          expect(res.body.reserved_hours).to.be.instanceOf(Array);
         })
         .end(done);
     });
@@ -65,22 +65,22 @@ describe('', function() {
       request(app)
         .post('/reserve')
         .send({
-          'sitename': 'BBall Court',
-          'username': 'Molly',
-          'date': '25112015',
-          'time': 20
+          'site_name': 'BBall Court',
+          'user_id': 'Molly',
+          'date': '11252015',
+          'time': [20, 9]
         })
         .expect(203)
         .end(function(){
           request(app)
           .get('/reserve')
           .query({
-            date:'25112015',
-            sitename: "BBall Court"
+            date:'11252015',
+            site_place_id: "BBall Court"
           })
           .expect(200)
           .expect(function (res){
-            var test_res = res.body.free_hours.indexOf(20) === -1;
+            var test_res = res.body.reserved_hours.indexOf(20) > 0 && res.body.reserved_hours.indexOf(9) > 0  ;
             expect(test_res).to.be.true;
           })
           .end(done);
@@ -146,6 +146,6 @@ describe('', function() {
 //   'reservations': {
 //     'user_id': 'Molly',
 //     'time': 11,
-//     'day': '25112015'
+//     'day': '11252015'
 //   }
 // }
