@@ -10,11 +10,12 @@
     <h4>Checkbox</h4>
     <pre>Model: {{checkModel}}</pre>
     <pre>Hours Selected: {{checkResults}}</pre>
+    <pre>takenHoursObj: {{takenHoursObj}}</pre>
     <div>
-      <label class="btn btn-primary" ng-repeat="hour in hours" ng-Model="checkModel[hour]" disabled="{{takenHoursObj[hour]}}">{{hour}}:00</label>
+      <label class="btn btn-primary" ng-repeat="hour in hours" ng-Model="checkModel[]">{{hour}}:00</label>
     </div>
     <div>
-      <button type="submit" class="btn btn-default" ng-click="submitReservation">Reserve</button>
+      <button type="submit" class="btn btn-default" ng-click="submitReservation"><a href="/#/home">Reserve</a></button>
     </div>
   </div>
 </div>

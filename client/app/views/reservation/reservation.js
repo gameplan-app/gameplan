@@ -1,4 +1,4 @@
-angular.module('gameplan.reservation', ['ui.bootstrap'])
+ßangular.module('gameplan.reservation', ['ui.bootstrap'])
 
 .controller('reservationCtrl', ['$scope', '$filter', '$location', 'reservationFactory', function($scope, $filter, $location, reservationFactory) {
 
@@ -10,7 +10,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     var date = $filter('date')($scope.dt, 'MMddyyyy')
     var venue = $location.url().split("/")[2];
     reservationFactory.getTimes(date, venue, function(response) {
-      takenCheck(response.data.free_hours);
+      takenCheck(response.data.reserved_hours);
     });
   };
 
@@ -84,6 +84,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
         date: date
       }
     }).then(function successCallback(response) {
+      console.log(response);
       callback(response)
     }, function errorCallback(response) {
       console.log("failed getting hours from server");
