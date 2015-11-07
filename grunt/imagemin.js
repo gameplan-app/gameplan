@@ -7,9 +7,9 @@ module.exports = {
   all: {
     files: [{
       expand: true,
-      cwd: 'src/',
+      cwd: 'client/app/assets/',
       src: ['images/*.{png,jpg,gif}'],
-      dest: 'app/dist'
+      dest: 'client/app/dist/images/'
     }]
   }
 };
