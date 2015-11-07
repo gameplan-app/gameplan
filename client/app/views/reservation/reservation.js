@@ -9,7 +9,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     var date = $filter('date')($scope.dt, 'MMddyyyy')
     var venue = $location.url().split("/")[2];
     reservationFactory.getTimes(date, venue, function(response) {
-      takenCheck(response.data.free_hours);
+      takenCheck(response.data.reserved_hours);
     });
   };
 
@@ -47,7 +47,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   });
 
   //disable times for buttons which are taken
-  $scope.takenHoursObj = {};
+  $scope.takenHoursObj = {
+    "9": true
+  };
 
   var takenCheck = function(takenHours) {
     //write into obj from array of hours which are taken
@@ -56,6 +58,10 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     });
     return $scope.takenHoursObj;
   };
+
+  $scope.submitForm = function(){
+
+  }
 
 
 }])
@@ -78,22 +84,5 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
       callback(response)
     });
   }
-
-  // //send selected times to database
-  // service.sendTimes = function(date, venue, callback) {
-  //   $http({
-  //     url: '/reserve',
-  //     method: 'GET',
-  //     // params is how you pass data on a get request with angular
-  //     params: {
-  //       site_name: venue,
-  //       date: date
-  //     }
-  //   }).then(function successCallback(response) {
-  //     callback(response)
-  //   }, function errorCallback(response) {
-  //     callback(response)
-  //   });
-  // }
   return service;
 }])
