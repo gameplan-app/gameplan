@@ -8,8 +8,8 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   $scope.loadTimes = function() {
     var date = $filter('date')($scope.dt, 'MMddyyyy')
     var venue = $location.url().split("/")[2];
-    reservationFactory.getTimes(date, venue, function(response){
-      console.log(response);
+    reservationFactory.getTimes(date, venue, function(response) {
+      takenCheck(response.data.free_hours);
     });
   };
 
@@ -17,17 +17,21 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   $scope.minDate = new Date();
   console.log($filter('date')($scope.dt, 'MMddyyyy'));
 
-//needed for buttons
+  //needed for buttons
   $scope.checkModel = {
     '9': false,
     '10': false,
     '11': false,
     '12': false,
-    '1': false,
-    '2': false,
-    '3': false,
-    '4': false,
-    '5': false
+    '13': false,
+    '14': false,
+    '15': false,
+    '16': false,
+    '17': false,
+    '18': false,
+    '19': false,
+    '20': false,
+    '21': false
   };
 
   $scope.checkResults = [];
@@ -43,16 +47,13 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   });
 
   //disable times for buttons which are taken
-  $scope.takenHoursObj = {
-    '9': true
-  };
+  $scope.takenHoursObj = {};
 
-  $scope.takenCheck = function(takenHours) {
+  var takenCheck = function(takenHours) {
     //write into obj from array of hours which are taken
     _.each(takenHours, function(item) {
       $scope.takenHoursObj[item] = true;
     });
-
     return $scope.takenHoursObj;
   };
 
