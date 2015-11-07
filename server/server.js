@@ -137,11 +137,11 @@ console.log('Unbalanced magic is happening on port ' + port);
   //       console.log(result);
   //     })
   //   })
-  Site.find({"sitename": "JAMTOWN", 
-    "reservations.time":12})
-    .exec(function (err, result){
-      console.log(result.length);
-    });
+  // Site.find({"sitename": "JAMTOWN", 
+  //   "reservations.time":12})
+  //   .exec(function (err, result){
+  //     console.log(result.length);
+  //   });
 
 // Site.find({}).exec(function (err, result){
 //   console.log(result);

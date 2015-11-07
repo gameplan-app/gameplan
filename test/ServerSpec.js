@@ -19,15 +19,15 @@ describe('', function() {
       .end(function(err, res) {
 
         // Delete objects from db so they can be created later for the test
-        Site.remove({
-          sitename: 'BBall Court'
-        }).exec();
+        // Site.remove({
+        //   sitename: 'BBall Court'
+        // }).exec();
 
         done();
       });
   });
   describe('Site creation: ', function() {
-    it('adds a new site reservation to the database', function(done) {
+    it('adds a new reservation and site to the database', function(done) {
       request(app)
         .post('/reserve')
         .send({
@@ -36,16 +36,33 @@ describe('', function() {
           'date': '25112015',
           'time': 11
         })
-        .expect(200)
+        .expect(203)
         .expect(function (res) {
           Site.find({"sitename": "BBall Court"})
             .exec(function (err, site) {
-            if(err) {console.error(err)};
-            expect(site.sitename).to.equal(1);
-          })
+              if(err) {console.error(err)};
+              expect(site[0].sitename).to.equal("BBall Court");
+            })
         })
         .end(done);
-    });
+      });
+
+      it('returns available times from the database', function(done){
+        request(app)
+          .get('/reserve')
+          .query({
+            date:'25112015',
+            sitename: "BBall Court"
+          })
+          .expect(200)
+          .expect(function (res){
+            expect(res.body.free_hours).to.be.instanceOf(Array);
+          })
+          .end(done);
+
+      it('returns')
+      });
+   
 
     // describe('With previously saved urls: ', function() {
 
