@@ -2,7 +2,7 @@
   Yeahhhh we killin it
   <span><a href='/#/home'>Cancel</a></span>
   <div>
-    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-click="printDate()"></uib-datepicker>
+    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-change="loadTimes()"></uib-datepicker>
     <pre>Selected date is: <em>{{dt | date:'MMddyyyy'}}</em></pre>
     <button ng-click="printDate()">click</button>
   </div>
