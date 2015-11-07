@@ -51,10 +51,6 @@ module.exports = function(grunt) {
       files: [
         'client/app/**/*.js',
         'client/app/views/**/*.js',
-        '!client/app/assets/js/*js',
-        '!client/app/bower_components/**/*js',
-        '!client/app/components/**/*js',
-        '!client/app/dist/**/*js'
       ],
       options: {
         force: 'true',
