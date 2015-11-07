@@ -15,10 +15,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.loadUsers = function(){
     reservationFactory.getUsers(function(response){
-      console.log(response.body)
-      return response.body
-    })
-  }
+      $scope.friends = response.data;
+    });
+  };
 
   $scope.today();
   $scope.minDate = new Date();
