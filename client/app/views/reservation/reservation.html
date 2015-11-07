@@ -1,14 +1,22 @@
 <div>
   Yeahhhh we killin it
   <span><a href='/#/home'>Cancel</a></span>
-  <div class="btn-group" uib-dropdown >
+
+  <div class="friends-search" uib-dropdown>
+    <li>
+      <input type="text" class="form-control" ng-model="query" ng-focus="loadUsers()" uib-dropdown-toggle ng-click="$event.stopPropagation()">
+        
+      </input>
+    </li>
     <ul class="uib-dropdown-menu" role="menu">
-      <li><input type="text" class="form-control" ng-model="query" ng-click="$event.stopPropagation()"></input></li>
       <li role="menuitem" ng-click="shareCollection(collection, user)" ng-repeat="user in friends | filter:query">
-        <a href="#">{{user}}</a>
+        <!-- <a href="#"> -->
+        {{user.username}}
+        <!-- </a> -->
       </li>
     </ul>
   </div>
+
   <div>
     <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-change="loadTimes()"></uib-datepicker>
     <pre>Selected date is: <em>{{dt | date:'MMddyyyy'}}</em></pre>

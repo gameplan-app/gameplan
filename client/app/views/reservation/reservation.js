@@ -15,6 +15,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.loadUsers = function(){
     reservationFactory.getUsers(function(response){
+      console.log(response.data);
       $scope.friends = response.data;
     });
   };
