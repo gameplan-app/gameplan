@@ -18,6 +18,10 @@ angular.module('gameplan', [
       templateUrl: 'views/reservation/reservation.html',
       controller: 'reservationCtrl'
     })
+    .when('/account/:user_id', {
+      templateUrl: 'views/account/account.html',
+      controller: 'AccountController'
+    })
     .otherwise({
       redirectTo: '/home'
     });
