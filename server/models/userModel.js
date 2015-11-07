@@ -23,6 +23,10 @@ var userSchema = new mongoose.Schema({
   checkins: {
     type: Array,
     required: false
+  },
+  emails: {
+    type: Array,
+    required: false
   }
 
 });
