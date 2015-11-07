@@ -4,6 +4,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.today = function() {
     $scope.dt = new Date();
+    $scope.loadTimes();
   };
   $scope.loadTimes = function() {
     var date = $filter('date')($scope.dt, 'MMddyyyy')
@@ -15,9 +16,11 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.today();
   $scope.minDate = new Date();
-  console.log($filter('date')($scope.dt, 'MMddyyyy'));
 
   //needed for buttons
+  $scope.hours = [
+    '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'
+  ];
   $scope.checkModel = {
     '9': false,
     '10': false,
@@ -57,6 +60,14 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     return $scope.takenHoursObj;
   };
 
+  $scope.submitReservation = function() {
+    var date = $filter('date')($scope.dt, 'MMddyyyy')
+    var venue = $location.url().split("/")[2];
+    reservationFactory.sendTimes(date, venue, $scope.checkResults, function(response) {
+      console.log("successfuly reserved venue");
+    });
+  }
+
 
 }])
 
@@ -75,25 +86,26 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     }).then(function successCallback(response) {
       callback(response)
     }, function errorCallback(response) {
-      callback(response)
+      console.log("failed getting hours from server");
     });
   }
 
-  // //send selected times to database
-  // service.sendTimes = function(date, venue, callback) {
-  //   $http({
-  //     url: '/reserve',
-  //     method: 'GET',
-  //     // params is how you pass data on a get request with angular
-  //     params: {
-  //       site_name: venue,
-  //       date: date
-  //     }
-  //   }).then(function successCallback(response) {
-  //     callback(response)
-  //   }, function errorCallback(response) {
-  //     callback(response)
-  //   });
-  // }
+  //send selected times to database
+  service.sendTimes = function(date, venue, time, callback) {
+    $http({
+      url: '/reserve',
+      method: 'POST',
+      // params is how you pass data on a get request with angular
+      params: {
+        site_name: venue,
+        date: date,
+        time: time
+      }
+    }).then(function successCallback(response) {
+      callback(response)
+    }, function errorCallback(response) {
+      console.log("failed submitting reservation");
+    });
+  }
   return service;
 }])
