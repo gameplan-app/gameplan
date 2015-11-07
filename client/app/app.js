@@ -13,7 +13,8 @@ angular.module('gameplan', [
     .when('/home', {
       templateUrl: 'views/home/home.html',
       controller: 'homeCtrl'
-    }).when('/reservation/:place_id', {
+    })
+    .when('/reservation/:place_id', {
       templateUrl: 'views/reservation/reservation.html',
       controller: 'reservationCtrl'
     })
