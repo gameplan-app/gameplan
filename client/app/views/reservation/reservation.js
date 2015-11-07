@@ -13,6 +13,13 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     });
   };
 
+  $scope.loadUsers = function(){
+    reservationFactory.getUsers(function(response){
+      console.log(response.body)
+      return response.body
+    })
+  }
+
   $scope.today();
   $scope.minDate = new Date();
   console.log($filter('date')($scope.dt, 'MMddyyyy'));
@@ -75,6 +82,17 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     }).then(function successCallback(response) {
       callback(response)
     }, function errorCallback(response) {
+      callback(response)
+    });
+  }
+
+  service.getUsers = function(callback){
+    $http({
+      url: '/users',
+      method: 'GET'
+    }).then(function successCallback(response){
+      callback(response)
+    }, function errorCallback(response){
       callback(response)
     });
   }
