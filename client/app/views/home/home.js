@@ -1,7 +1,7 @@
 // A gameplan-app project
 // =============================================================================
 
-'use strict';
+
 
 angular.module('gameplan.home', [])
 
