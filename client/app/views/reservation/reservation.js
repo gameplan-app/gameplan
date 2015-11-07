@@ -6,9 +6,10 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.today = function() {
     $scope.dt = new Date();
+    $scope.loadTimes();
   };
   $scope.loadTimes = function() {
-    var date = $filter('date')($scope.dt, 'MMddyyyy')
+    var date = $filter('date')($scope.dt, 'MMddyyyy');
     var venue = $location.url().split("/")[2];
     reservationFactory.getTimes(date, venue, function(response) {
       takenCheck(response.data.reserved_hours);
@@ -34,7 +35,6 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.today();
   $scope.minDate = new Date();
-  console.log($filter('date')($scope.dt, 'MMddyyyy'));
 
   //needed for buttons
   $scope.checkModel = {
@@ -66,20 +66,25 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   });
 
   //disable times for buttons which are taken
-  $scope.takenHoursObj = {
-    "9": true
-  };
+  $scope.takenHoursObj = {};
 
   var takenCheck = function(takenHours) {
     //write into obj from array of hours which are taken
+    $scope.takenHoursObj = {};
     _.each(takenHours, function(item) {
       $scope.takenHoursObj[item] = true;
     });
     return $scope.takenHoursObj;
   };
 
-  $scope.submitForm = function(){
-
+  $scope.submitReservation = function() {
+    var date = $filter('date')($scope.dt, 'MMddyyyy')
+    var venue = $location.url().split("/")[2];
+    reservationFactory.sendTimes(date, venue, $scope.checkResults, function(response) {
+      $scope.checkResults = [];
+      console.log("successfuly reserved venue");
+      $location.path("/#/home");
+    });
   }
 
 
@@ -98,9 +103,27 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
         date: date
       }
     }).then(function successCallback(response) {
+      console.log(response);
       callback(response)
     }, function errorCallback(response) {
+      console.log("failed getting hours from server");
+    });
+  }
+
+  //send selected times to database
+  service.sendTimes = function(date, venue, time, callback) {
+    $http({
+      url: '/reserve',
+      method: 'POST',
+      data: {
+        site_name: venue,
+        date: date,
+        time: time
+      }
+    }).then(function successCallback(response) {
       callback(response)
+    }, function errorCallback(response) {
+      console.log("failed submitting reservation");
     });
   }
 
