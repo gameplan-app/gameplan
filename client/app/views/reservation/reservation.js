@@ -7,7 +7,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     };
   $scope.loadTimes = function(){
     var date = $filter('date')($scope.dt, 'MMddyyyy')
-    reservationFactory.getTimes(date, 'ChIJBWm8fOmAhYARdSpDfT2vt0w', function(response){
+    reservationFactory.getTimes(date, 'ChIJH34cU9R_j4AReHUaVJAQfdQ', function(response){
       console.log(response);
     })
   }

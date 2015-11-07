@@ -181,6 +181,7 @@ exports.siteReserve = function(req, res) {
 };
 
 exports.siteDayAvailability = function(req, res) {
+  console.log("availability req", req.query)
   var findQuery = {
     'site_place_id': req.query.site_name,
     'reservations.date': moment(req.query.date, "MMDDYYYY")
@@ -192,13 +193,16 @@ exports.siteDayAvailability = function(req, res) {
       console.error(err);
       res.status(401).send("error getting available times");
     }
-
-    _.each(result[0].reservations, function(reservation) {
-      var i = _.indexOf(free_hours, reservation.time)
-      if (i > 0) {
-        free_hours.splice(i, res_length);
-      }
-    });
+    console.log("result fron site day availability", result);
+    if (result[0] !== undefined) {
+      _.each(result[0].reservations, function(reservation) {
+        var i = _.indexOf(free_hours, reservation.time)
+        if (i > 0) {
+          free_hours.splice(i, res_length);
+        }
+      });
+    }
+    
     res.status(200).send({
       free_hours: free_hours
     });
