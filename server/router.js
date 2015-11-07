@@ -18,7 +18,7 @@ router.post('/siteinfo', utils.postSiteInfo);
 router.post('/checkin', utils.siteCheckin);
 router.post('/checkout', utils.siteCheckout);
 router.post('/reserve', utils.siteReserve);
-router.get('/reserve', utils.siteDayAvailability)
+router.get('/reserve', utils.siteDayAvailability);
 
 
 // AUTH
@@ -65,6 +65,5 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
   });
 });
-
 
 module.exports = router; // export router for other modules to use

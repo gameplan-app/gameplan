@@ -1,7 +1,7 @@
 // A gameplan-app project
 // =============================================================================
 
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({path: __dirname + '/../.env'});
 var express = require('express'); // bring in express
 var bodyParser = require('body-parser'); // bring in body parser for parsing requests
 var router = require('./router.js'); // add link to our router file
@@ -11,13 +11,7 @@ var FacebookStrategy = require('passport-facebook').Strategy; // FB auth via pas
 var cookieParser = require('cookie-parser'); // parses cookies
 var uriUtil = require('mongodb-uri'); // util for Mongo URIs
 var config = require('./config/dev-config.js');
-
-
-
-
-
-
-
+var moment = require('moment');
 // SCHEMA / MODELS
 var User = require('./models/userModel.js');
 var Site = require('./models/siteModel.js');
@@ -87,9 +81,13 @@ app.use('callback', router);
 
 app.use('/reserve', router);
 
-
+module.exports = {
+  app: app,
+  db: db
+};
 // SERVER INIT
 app.listen(port);
+
 console.log('Unbalanced magic is happening on port ' + port);
 
 
@@ -112,10 +110,33 @@ console.log('Unbalanced magic is happening on port ' + port);
   //   console.error(error)
   // });
 
-  // var siteCreate = Q.nbind(Site.create, Site);
+  // var siteCreate = Q.nbind(Site.findOrCreate, Site);
+  // var siteFindOne = Q.bind(Site.findOneAndUpdate, Site);
+
   // var newSite = {
   //  'site_place_id' : 54321,
   //  'sitename' : 'JAMTOWN'
   // };
   // siteCreate(newSite);
+  // Site.findOneAndUpdate({sitename:"JAMTOWN"},
+  //   {$push: {"reservations": {
+  //     date: moment('25112015', "DDMMYYYY"),
+  //     time: 11,
+  //     user_id: "Molly"
+  //   }}},
+  //   function (err, result) {
+  //     if(err) console.log(err);
+  //     Site.find({"sitename":'JAMTOWN'}).exec(function (err, result){
+  //       if (err) console.error(err);
+  //       console.log(result);
+  //     })
+  //   })
+  // Site.find({"sitename": "JAMTOWN", 
+  //   "reservations.time":12})
+  //   .exec(function (err, result){
+  //     console.log(result.length);
+  //   });
 
+// Site.find({}).exec(function (err, result){
+//   console.log(result);
+// })
