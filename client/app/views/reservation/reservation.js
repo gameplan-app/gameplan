@@ -2,6 +2,8 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
 .controller('reservationCtrl', ['$scope', '$filter', '$location', 'reservationFactory', function($scope, $filter, $location, reservationFactory) {
 
+  $scope.userListForEmail = [];
+
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -19,6 +21,16 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
       $scope.friends = response.data;
     });
   };
+
+  $scope.addUserEmail = function(user){
+    for(var i = 0; i < $scope.userListForEmail.length; i++){
+      if($scope.userListForEmail[i][1] === user.emails[0].value){
+        console.log("user is already added")
+        return;
+      }
+    }
+    $scope.userListForEmail.push([user.username, user.emails[0].value]);
+  }
 
   $scope.today();
   $scope.minDate = new Date();

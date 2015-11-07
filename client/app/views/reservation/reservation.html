@@ -9,10 +9,8 @@
       </input>
     </li>
     <ul class="uib-dropdown-menu" role="menu">
-      <li role="menuitem" ng-click="shareCollection(collection, user)" ng-repeat="user in friends | filter:query">
-        <!-- <a href="#"> -->
+      <li role="menuitem" ng-click="addUserEmail(user)" ng-repeat="user in friends | filter:query">
         {{user.username}}
-        <!-- </a> -->
       </li>
     </ul>
   </div>
