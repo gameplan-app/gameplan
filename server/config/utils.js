@@ -18,7 +18,7 @@ exports.ensureAuthenticated = function(req, res, next) { // make sure user auth 
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login')
+  res.redirect('/login');
 };
 
 exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
@@ -162,7 +162,7 @@ function addRes(req, res) {
         res.status(400).send("error making reservation");
       }
       res.status(202).send();
-    })
+    });
 }
 
 exports.siteReserve = function(req, res) {
@@ -184,7 +184,7 @@ exports.siteDayAvailability = function(req, res) {
   var findQuery = {
     'sitename': req.query.sitename,
     'reservations.date': moment(req.query.date, "DDMMYYYY")
-  }
+  };
   var res_length = req.query.res_length || 1;
   var free_hours = _.range(24);
   Site.find(findQuery).exec(function(err, result) {
@@ -194,7 +194,7 @@ exports.siteDayAvailability = function(req, res) {
     }
 
     _.each(result[0].reservations, function(reservation) {
-      var i = _.indexOf(free_hours, reservation.time)
+      var i = _.indexOf(free_hours, reservation.time);
       if (i > 0) {
         free_hours.splice(i, res_length);
       }
@@ -202,5 +202,5 @@ exports.siteDayAvailability = function(req, res) {
     res.status(200).send({
       free_hours: free_hours
     });
-  })
+  });
 };
