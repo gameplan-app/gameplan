@@ -9,9 +9,9 @@ module.exports = {
     },
     files: [{
       expand: true,
-      cwd: 'src/styles',  // change this
-      src: ['*.scss'],
-      dest: 'dist/styles', // change this
+      cwd: 'client/app/assets/',  // change this
+      src: ['scss/*.scss'],
+      dest: 'client/app/dist/css', // change this
       ext: '.css'
     }]
   },
@@ -23,9 +23,9 @@ module.exports = {
     },
     files: [{
       expand: true,
-      cwd: 'src/styles',
-      src: ['*.scss'],
-      dest: 'dist/styles',
+      cwd: 'client/app/assets/',
+      src: ['scss/*.scss'],
+      dest: 'client/app/dist/css',
       ext: '.css'
     }]
   }
