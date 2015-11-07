@@ -9,7 +9,7 @@ module.exports = {
       expand: true,
       cwd: 'client/app/assets/',
       src: ['images/*.{png,jpg,gif}'],
-      dest: 'client/app/dist/images/'
+      dest: 'client/app/dist/images
     }]
   }
 };
