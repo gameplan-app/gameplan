@@ -210,3 +210,22 @@ exports.siteDayAvailability = function(req, res) {
     });
   })
 };
+
+exports.getAllUsers = function (req, res) {
+  User.find({}, 'username photo emails', function (err, result) {
+    res.status(200).send(result);
+  })
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
