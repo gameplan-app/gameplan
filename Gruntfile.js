@@ -22,16 +22,16 @@ module.exports = function(grunt) {
       }
     },
 
-    sass: { // Task 
-      dist: { // Target 
-        options: { // Target options 
+    sass: { // Task
+      dist: { // Target
+        options: { // Target options
           sourceMap: true,
           outputStyle: 'compressed'
             // cacheLocation: 'app/assets/.sass-cache',
             // style: 'compressed'
         },
-        files: { // Dictionary of files 
-          'client/app/dist/css/app.css': 'client/app/assets/scss/app.scss', // 'destination': 'source' 
+        files: { // Dictionary of files
+          'client/app/dist/css/app.css': 'client/app/assets/scss/app.scss', // 'destination': 'source'
         }
       }
     },
@@ -49,12 +49,7 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [
-        'client/app/**/*.js',
-        'client/app/views/**/*.js',
-        '!client/app/assets/js/*js',
-        '!client/app/bower_components/**/*js',
-        '!client/app/components/**/*js',
-        '!client/app/dist/**/*js'
+        'client/app/views/**/*.js'
       ],
       options: {
         force: 'true',
