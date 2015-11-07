@@ -139,13 +139,13 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 
 function addRes(req, res) {
   Site.findOneAndUpdate({
-      'sitename': req.body.sitename
+      'site_place_id': req.body.site_name
     },
     // add new reservation to existing site doc
     {
       $push: {
         "reservations": {
-          date: moment(req.body.date, "DDMMYYYY"),
+          date: moment(req.body.date, "MMDDYYYY"),
           time: req.body.time,
           user_id: req.body.user_id
         }
@@ -167,8 +167,8 @@ function addRes(req, res) {
 
 exports.siteReserve = function(req, res) {
   Site.find({
-      sitename: req.body.sitename,
-      "reservations.date": moment(req.body.date, "DDMMYYYY"),
+      "site_place_id": req.body.site_name,
+      "reservations.date": moment(req.body.date, "MMDDYYYY"),
       "reservations.time": req.body.time
     })
     .exec(function(err, result) {
@@ -181,9 +181,10 @@ exports.siteReserve = function(req, res) {
 };
 
 exports.siteDayAvailability = function(req, res) {
+  console.log("availability req", req.query)
   var findQuery = {
-    'sitename': req.query.sitename,
-    'reservations.date': moment(req.query.date, "DDMMYYYY")
+    'site_place_id': req.query.site_name,
+    'reservations.date': moment(req.query.date, "MMDDYYYY")
   }
   var res_length = req.query.res_length || 1;
   var free_hours = _.range(24);
@@ -192,13 +193,16 @@ exports.siteDayAvailability = function(req, res) {
       console.error(err);
       res.status(401).send("error getting available times");
     }
-
-    _.each(result[0].reservations, function(reservation) {
-      var i = _.indexOf(free_hours, reservation.time)
-      if (i > 0) {
-        free_hours.splice(i, res_length);
-      }
-    });
+    console.log("result fron site day availability", result);
+    if (result[0] !== undefined) {
+      _.each(result[0].reservations, function(reservation) {
+        var i = _.indexOf(free_hours, reservation.time)
+        if (i > 0) {
+          free_hours.splice(i, res_length);
+        }
+      });
+    }
+    
     res.status(200).send({
       free_hours: free_hours
     });
