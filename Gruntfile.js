@@ -1,145 +1,48 @@
-// A gameplan-app project
-// =============================================================================
+// Gruntfile.js
 
+// our wrapper function (required by grunt and its plugins)
+// all configuration goes inside this function
 module.exports = function(grunt) {
 
+  // =====================================================
+  // CONFIGURE GRUNT =====================================
+  // =====================================================
   grunt.initConfig({
+
+    // get the configuration info from package.json
+    // this way we can use things like name and version (pkg.name)
     pkg: grunt.file.readJSON('package.json'),
-
-    concat: {
-      options: {
-        separator: ';',
-      },
-      dist: {
-        src: [
-          'client/app/**/*.js',
-          'client/app/views/**/*.js',
-          '!client/app/assets/js/*js',
-          '!client/app/bower_components/**/*js',
-          '!client/app/dist/**/*js'
-        ],
-        dest: 'client/app/dist/js/app.concat.js'
-      }
-    },
-
-    sass: { // Task 
-      dist: { // Target 
-        options: { // Target options 
-          sourceMap: true,
-          outputStyle: 'compressed'
-            // cacheLocation: 'app/assets/.sass-cache',
-            // style: 'compressed'
-        },
-        files: { // Dictionary of files 
-          'client/app/dist/css/app.css': 'client/app/assets/scss/app.scss', // 'destination': 'source' 
-        }
-      }
-    },
-
-    uglify: {
-      options: {
-        banner: '/*! app.js <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        preserveComments: false
-      },
-      build: {
-        src: 'client/app/dist/js/app.concat.js',
-        dest: 'client/app/dist/js/app.min.js'
-      }
-    },
-
-    jshint: {
-      files: [
-        'client/app/views/**/*.js'
-      ],
-      options: {
-        force: 'true',
-        jshintrc: '.jshintrc',
-        ignores: [
-          'public/lib/**/*.js',
-          'public/dist/**/*.js'
-        ]
-      }
-    },
-
-    watch: {
-      scripts: {
-        files: [
-          'client/app/**/*.js',
-          'client/app/views/**/*.js',
-          '!client/app/assets/js/*js',
-          '!client/app/bower_components/**/*js',
-          '!client/app/components/**/*js',
-          '!client/app/dist/**/*js'
-        ],
-        tasks: [
-          'jshint',
-          'concat',
-          'uglify'
-        ]
-      },
-      css: {
-        files: 'client/app/assets/scss/*.scss',
-        tasks: ['sass']
-      }
-    },
-
-    shell: {
-      view: {
-        command: 'open http://localhost:8080/',
-        options: {
-          execOptions: {
-            maxBuffer: 500 * 1024 // or Infinity
-          }
-        }
-      },
-      server: {
-        command: 'nodemon server/server.js'
-      }
+    log: {
+      name: '<%= pkg.name %>', // name of project in package.json
+      version: '<%= pkg.version %>' // name of project version
     }
+    // all our configuration will go here
 
-  });
+    // configure jshint to validate js files
+  //   jshint: {
+  //     options: {
+  //       // use jshint-stylish to make errors look & read good
+  //       reporter: require('jshint-stylish') 
+  //     },
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  //     build: ['Gruntfile.js', 'client/app/app.js', 'client/app/views/*.js', 'server/**/*.js']
+  //   }
+  // });
+
+  // =====================================================
+  // LOAD GRUNT PLUGINS ==================================
+  // =====================================================
+  // we can only load these if they are in our package.json
+  // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-shell');
-  grunt.loadNpmTasks('grunt-sass');
-  // grunt.loadNpmTasks('grunt-contrib-sass'); // Removed to used grunt-sass
 
-
-
-  ////////////////////////////////////////////////////
-  // Main grunt tasks
-  ////////////////////////////////////////////////////
-
-
-  grunt.registerTask('default', [
-    'watch'
-  ]);
-
-  // Compile all sass files
-  grunt.registerTask('sass-compile', [
-    'sass'
-  ]);
-
-  // Create and check file
-  grunt.registerTask('build', [
-    'jshint',
-    'concat',
-    'uglify',
-    'sass'
-  ]);
-
-  // Open the HTML app file
-  grunt.registerTask('view', function() {
-    grunt.task.run(['shell:view']);
+  grunt.registerMultiTask('log', 'Log Project details.', function() {
+    // because this uses the registerMultiTask function it runs
+    // grunt.log.writeln() for each attr in above log: {} obj
+    grunt.log.writeln(this.target + ': ' + this.data);
   });
-
-  // Start local server
-  grunt.registerTask('server', function() {
-    grunt.task.run(['shell:server']);
-  });
-
-
 };
