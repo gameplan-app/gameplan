@@ -11,6 +11,7 @@ var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
 var moment = require('moment'); // library for dealing with dates and times
 var nodemailer = require("nodemailer"); //email from node
+var _ = require("underscore");
 
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
@@ -26,11 +27,8 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbUserName": res.req.user.displayName,
     "fbPicture": res.req.user.photos[0].value,
   };
-
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
-
   exports.postUserInfo(fbUserInfo);
-
   res.redirect('/');
 };
 
@@ -99,6 +97,7 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
+//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
 //EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
@@ -137,12 +136,71 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 };
 
 
+
+function addRes(req, res) {
+  Site.findOneAndUpdate({
+      'sitename': req.body.sitename
+    },
+    // add new reservation to existing site doc
+    {
+      $push: {
+        "reservations": {
+          date: moment(req.body.date, "DDMMYYYY"),
+          time: req.body.time,
+          user_id: req.body.user_id
+        }
+      }
+    },
+    // upsert: create if it doesn't already exist, new: return updated doc
+    {
+      upsert: true,
+      new: true
+    },
+    function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(400).send("error making reservation");
+      }
+      res.status(202).send();
+    })
+}
+
 exports.siteReserve = function(req, res) {
-
-
+  Site.find({
+      sitename: req.body.sitename,
+      "reservations.date": moment(req.body.date, "DDMMYYYY"),
+      "reservations.time": req.body.time
+    })
+    .exec(function(err, result) {
+      if (result.length === 0) {
+        addRes(req, res);
+      } else {
+        res.status(202).send("there is already a reservation at that time");
+      }
+    });
 };
 
 exports.siteDayAvailability = function(req, res) {
+  var findQuery = {
+    'sitename': req.query.sitename,
+    'reservations.date': moment(req.query.date, "DDMMYYYY")
+  }
+  var res_length = req.query.res_length || 1;
+  var free_hours = _.range(24);
+  Site.find(findQuery).exec(function(err, result) {
+    if (err) {
+      console.error(err);
+      res.status(401).send("error getting available times");
+    }
 
-
+    _.each(result[0].reservations, function(reservation) {
+      var i = _.indexOf(free_hours, reservation.time)
+      if (i > 0) {
+        free_hours.splice(i, res_length);
+      }
+    });
+    res.status(200).send({
+      free_hours: free_hours
+    });
+  })
 };
