@@ -86,7 +86,7 @@ module.exports = {
   db: db
 };
 // SERVER INIT
-// app.listen(port);
+app.listen(port);
 
 console.log('Unbalanced magic is happening on port ' + port);
 
@@ -131,7 +131,7 @@ console.log('Unbalanced magic is happening on port ' + port);
   //       console.log(result);
   //     })
   //   })
-  // Site.find({"sitename": "JAMTOWN", 
+  // Site.find({"sitename": "JAMTOWN",
   //   "reservations.time":12})
   //   .exec(function (err, result){
   //     console.log(result.length);
