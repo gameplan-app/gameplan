@@ -10,6 +10,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     var venue = $location.url().split("/")[2];
     reservationFactory.getTimes(date, venue, function(response) {
       takenCheck(response.data.free_hours);
+      console.log(takenCheck(response.data.free_hours));
     });
   };
 
@@ -47,7 +48,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   });
 
   //disable times for buttons which are taken
-  $scope.takenHoursObj = {};
+  $scope.takenHoursObj = {
+    "9": true
+  };
 
   var takenCheck = function(takenHours) {
     //write into obj from array of hours which are taken
