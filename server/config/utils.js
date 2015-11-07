@@ -201,4 +201,3 @@ exports.siteDayAvailability = function(req, res) {
   })
 };
 
->>>>>>> [test]: tests passing for backend reservation system
