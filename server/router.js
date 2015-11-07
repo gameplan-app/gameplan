@@ -31,7 +31,7 @@ router.get('/auth/facebook/callback',
   });
 
 router.get('/auth/facebook',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', { scope: [ 'email' ] }),
   function(req, res) {
     // The request will be redirected to Facebook for authentication, so this
     // function will not be called.
@@ -44,9 +44,6 @@ router.get('/userauth', passport.authenticate('facebook', {
     res.redirect('/');
   });
 
-router.get('/connect/facebook', passport.authorize('facebook', {
-        scope: ['email']
-  }));
 
 passport.use(new FacebookStrategy({ // request fields from facebook
     profileFields: ['id', 'displayName', 'photos', 'email'],
