@@ -28,6 +28,7 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbPicture": res.req.user.photos[0].value,
     "fbEmails": res.req.user.emails
   };
+  console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');

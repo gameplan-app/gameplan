@@ -26,7 +26,7 @@ describe('', function() {
         done();
       });
   });
-  describe('Site creation: ', function() {
+  describe('Backend Routes: ', function() {
     it('adds a new reservation and site to the database', function(done) {
       request(app)
         .post('/reserve')
@@ -92,56 +92,13 @@ describe('', function() {
       .get('/users')
       .expect(200)
       .expect(function (res){
-        console.log(res.body);
+        // console.log(res.body);
         expect(res.body).to.be.instanceOf(Object)
       })
       .end(done);
     })
 
-    // describe('With previously saved urls: ', function() {
-
-    //   beforeEach(function(done) {
-    //     link = new Link({
-    //       url: 'http://www.makersquare.com/',
-    //       title: 'Rofl Zoo - Daily funny animal pictures',
-    //       base_url: 'http://127.0.0.1:4568',
-    //       visits: 0
-    //     })
-
-    //     link.save(function() {
-    //       done();
-    //     });
-    //   });
-
-    //   it('Returns the same shortened code if attempted to add the same URL twice', function(done) {
-    //     var firstCode = link.code
-    //     request(app)
-    //       .post('/links')
-    //       .send({
-    //         'url': 'http://www.makersquare.com/'})
-    //       .expect(200)
-    //       .expect(function(res) {
-    //         var secondCode = res.body.code;
-    //         expect(secondCode).to.equal(firstCode);
-    //       })
-    //       .end(done);
-    //   });
-
-    //   it('Shortcode redirects to correct url', function(done) {
-    //     var sha = link.code;
-    //     request(app)
-    //       .get('/' + sha)
-    //       .expect(302)
-    //       .expect(function(res) {
-    //         var redirect = res.headers.location;
-    //         expect(redirect).to.equal('http://www.makersquare.com/');
-    //       })
-    //       .end(done);
-    //   });
-
-    // }); // 'With previously saved urls'
-
-  }); // 'Site creation'
+  }); 
 });
 
 
