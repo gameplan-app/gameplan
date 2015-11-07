@@ -3,11 +3,13 @@
   "main": "server/server.js",
   "scripts": {
     "postinstall": "bower install && grunt build",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "test": "node server/server.js& ./node_modules/.bin/mocha test/ServerSpec.js; pkill -n node;"
   },
   "dependencies": {
     "body-parser": "~1.0.1",
     "bower": "^1.6.5",
+    "chai": "^3.4.0",
     "cookie-parser": "^1.4.0",
     "dotenv": "^1.2.0",
     "express": "~4.0.0",
@@ -21,12 +23,18 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-sass": "^1.0.0",
     "grunt-shell": "^1.1.2",
+    "mocha": "^2.3.3",
     "moment": "^2.10.6",
     "mongodb-uri": "^0.9.7",
     "mongoose": "3.8",
     "mongoose-findorcreate": "^0.1.2",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "supertest": "^1.1.0"
   }
 }

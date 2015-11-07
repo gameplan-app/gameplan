@@ -98,23 +98,52 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
+function addRes (req, res){
+  Site.findOneAndUpdate(findQuery, 
+  // add new reservation to existing site doc
+  {$push: {"reservations":{
+    date: moment(req.body.date, "DDMMYYYY"),
+    time: req.body.time,
+    user_id: req.body.user_id
+  }}},
+  // upsert: create if it doesn't already exist, new: return updated doc
+  {upsert: true, new: true},
+  function (err, result) {
+    if (err) {
+      console.error(err);
+      res.status(400).send("error making reservation");
+    }
+    res.status(200).send();
+  })
+}
 
 exports.siteReserve = function(req, res) {
-  site.findAll = Q.bind(Site.find, Site)
+  var findQuery = {
+    'sitename': req.body.sitename,
+  }
+  var siteFindOne = Q.bind(Site.findOneAndUpdate, Site);
 
+  Site.find({
+    sitename: req.body.sitename, 
+    "reservations.date": moment(req.body.date, "DDMMYYY"), 
+    "reservations.time":req.body.time
+  })
+  .exec(function (err, result){
+    if (result.length===0) {
+      addRes(req, res);
+    } else {
+      res.status(202).send("there is already a reservation at that time");
+    }
+  });  
 };
+
+
 
 exports.siteDayAvailability = function(req, res) {
   var res_length = req.body.res_length || 1;
   var free_hours = _.range(24);
   siteFindAll = Q.bind(Site.find, Site);
-  siteFindAll({
-    'site': req.body.site_place_id,
-    'reservations.day': {
-      "$gte": moment(req.body.day).startOf('day'),
-      "$lte": moment(req.body.day).endOf('day')
-    }
-  }, function(err, result) {
+  siteFindAll(findQuery, function(err, result) {
     if (err) {
       console.error(err);
     }
@@ -127,6 +156,5 @@ exports.siteDayAvailability = function(req, res) {
     });
     return free_hours
   })
-
-
+  res.send(free_hours);
 };
