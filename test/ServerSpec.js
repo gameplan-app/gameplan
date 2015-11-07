@@ -87,6 +87,16 @@ describe('', function() {
         })
     });
 
+    it('returns all users from db', function (done) {
+      request(app)
+      .get('/users')
+      .expect(200)
+      .expect(function (res){
+        console.log(res.body);
+        expect(res.body).to.be.instanceOf(Object)
+      })
+      .end(done);
+    })
 
     // describe('With previously saved urls: ', function() {
 
