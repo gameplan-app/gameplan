@@ -136,6 +136,7 @@ module.exports = function(grunt) {
     'sass'
   ]);
 
+  grunt.registerTask('jshint', ['jshint']);
 
   // Open the HTML app file
   grunt.registerTask('view', function() {
