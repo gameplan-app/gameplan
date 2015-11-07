@@ -145,7 +145,7 @@ function addRes(req, res) {
     {
       $push: {
         "reservations": {
-          date: moment(req.body.date, "DDMMYYYY"),
+          date: moment(req.body.date, "MMDDYYYY"),
           time: req.body.time,
           user_id: req.body.user_id
         }
@@ -168,7 +168,7 @@ function addRes(req, res) {
 exports.siteReserve = function(req, res) {
   Site.find({
       "site_place_id": req.body.site_name,
-      "reservations.date": moment(req.body.date, "DDMMYYYY"),
+      "reservations.date": moment(req.body.date, "MMDDYYYY"),
       "reservations.time": req.body.time
     })
     .exec(function(err, result) {
@@ -183,7 +183,7 @@ exports.siteReserve = function(req, res) {
 exports.siteDayAvailability = function(req, res) {
   var findQuery = {
     'site_place_id': req.query.site_name,
-    'reservations.date': moment(req.query.date, "DDMMYYYY")
+    'reservations.date': moment(req.query.date, "MMDDYYYY")
   }
   var res_length = req.query.res_length || 1;
   var free_hours = _.range(24);
