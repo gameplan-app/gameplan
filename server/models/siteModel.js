@@ -25,10 +25,12 @@ var siteSchema = new mongoose.Schema({
       type: Date,
       required: false
     },
+
     time: {
       type: Number,
       required: false
     },
+
     user_id: {
       type: String,
       required: false

@@ -3,19 +3,15 @@
 
 var express = require('express'); // bring in express
 var bodyParser = require('body-parser'); // bring in body parser for parsing requests
+
 var router = require('../router.js'); // connect to our router
 var session = require('express-session'); // to enable user sessions
 var User = require('../models/userModel.js'); // our user schema
 var Site = require('../models/siteModel.js'); // our site schema
 var Q = require('q'); // promises library
 var moment = require('moment'); // library for dealing with dates and times
-<<<<<<< cbad0ed789046ad69241894468583df3a50d6f5c
-var _ = require('underscore');
-=======
->>>>>>> [feat] : errors for server to run
 var nodemailer = require("nodemailer"); //email from node
-var _ = require('underscore');
-
+var _ = require("underscore");
 
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
@@ -103,8 +99,10 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
 
 //EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
+//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
 
 exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
+
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
     service: "Gmail",
@@ -113,6 +111,7 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
       pass: "makersquare"
     }
   });
+
   mailOpts = {
     from: "game.plan.schedule@gmail.com",
     to: email,
@@ -126,17 +125,22 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
       "Game Time!\n" +
       "-Gameplan Team"
   };
-    smtpTransport.sendMail(mailOpts, function(error) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email was sent!");
-      }
-    });
-  };
+
+  smtpTransport.sendMail(mailOpts, function(error) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email was sent!");
+    }
+  });
+};
+
+
 
 function addRes(req, res) {
-  Site.findOneAndUpdate({'sitename': req.body.sitename},
+  Site.findOneAndUpdate({
+      'sitename': req.body.sitename
+    },
     // add new reservation to existing site doc
     {
       $push: {
@@ -176,8 +180,6 @@ exports.siteReserve = function(req, res) {
     });
 };
 
-
-
 exports.siteDayAvailability = function(req, res) {
   var findQuery = {
     'sitename': req.query.sitename,
@@ -197,7 +199,8 @@ exports.siteDayAvailability = function(req, res) {
         free_hours.splice(i, res_length);
       }
     });
-    res.status(200).send({free_hours: free_hours});  
+    res.status(200).send({
+      free_hours: free_hours
+    });
   })
 };
-
