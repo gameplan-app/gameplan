@@ -1,13 +1,14 @@
 angular.module('gameplan.reservation', ['ui.bootstrap'])
 
-.controller('reservationCtrl', ['$scope', '$filter', 'reservationFactory', function($scope, $filter, reservationFactory) {
+.controller('reservationCtrl', ['$scope', '$filter', '$location', 'reservationFactory', function($scope, $filter, $location, reservationFactory) {
 
   $scope.today = function() {
     $scope.dt = new Date();
   };
   $scope.loadTimes = function() {
     var date = $filter('date')($scope.dt, 'MMddyyyy')
-    reservationFactory.getTimes(date, null, function(response) {
+    var venue = $location.url().split("/")[2];
+    reservationFactory.getTimes(date, venue, function(response){
       console.log(response);
     });
   };
