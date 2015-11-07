@@ -1,7 +1,7 @@
 // A gameplan-app project
 // =============================================================================
 
-'use strict';
+
 
 angular.module('gameplan.home', [])
 
@@ -66,7 +66,7 @@ angular.module('gameplan.home', [])
         'address': locationData
       },
       function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status === google.maps.GeocoderStatus.OK) {
           getMap(results[0].geometry.location, 14); // redraw map with new location
           drawUserMarker(results[0].geometry.location); // draw a new marker in the center of the map
           $scope.clickedPosition = results[0].geometry.location; // searches will now be around the new marker
@@ -78,7 +78,7 @@ angular.module('gameplan.home', [])
 
   // CREATE A PERSISTENT USER MARKER
   var drawUserMarker = function(position) {
-    if (position == undefined) {
+    if (position === undefined) {
       position = $scope.map.getCenter();
     }
 
@@ -145,7 +145,7 @@ angular.module('gameplan.home', [])
       infoWindow.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
-    };
+    }
   };
 
   // CREATE MARKERS FOR SITES
@@ -177,8 +177,8 @@ angular.module('gameplan.home', [])
     });
 
     marker.addListener('click', function() { // add event listener for each marker
-      $('*[data-placeId] .sitename').css("font-weight", "normal"); // make text for list item bold
-      $('*[data-placeId=' + place.place_id + '] .sitename').css("font-weight", "bold");
+      $('*[data-placeId] .sitename').css('font-weight', 'normal'); // make text for list item bold
+      $('*[data-placeId=' + place.place_id + '] .sitename').css('font-weight', 'bold');
 
       infowindow.setContent('<div class="infowindow-name">' + placeName + '</div><div class="infowindow-open ' + placeOpenNowClass + '">' + placeOpenNow + '</div><div class="infowindow-vicinity">' + placeVicinity + '</div');
       infowindow.open($scope.map, this); // infowindow popup
@@ -202,10 +202,10 @@ angular.module('gameplan.home', [])
     $scope.currentRankByFlag = rankByFlag;
     $scope.selectedSport = sport;
 
-    if (keyword != undefined) { // if keyword is passed in, save it
+    if (keyword !== undefined) { // if keyword is passed in, save it
       $scope.currentKeyword = keyword;
     }
-    if ($scope.clickedPosition == undefined) { // if no flag set, search around center of map
+    if ($scope.clickedPosition === undefined) { // if no flag set, search around center of map
       searchLocation = $scope.map.getCenter();
     } else { // otherwise search around flag
       searchLocation = $scope.clickedPosition;
@@ -237,7 +237,7 @@ angular.module('gameplan.home', [])
     service.nearbySearch(request, nearbySearchCallback); // perform the search with given parameters
 
     function nearbySearchCallback(results, status) { // this callback must handle the results object and the PlacesServiceStatus response
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
         $scope.sitesResults = results; // populate site list with results
         $scope.$apply(); // force update the $scope
 
