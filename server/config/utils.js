@@ -22,6 +22,7 @@ exports.ensureAuthenticated = function(req, res, next) { // make sure user auth 
 };
 
 exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
+  console.log(res);
   var fbUserInfo = {
     "fbId": res.req.user.id,
     "fbUserName": res.req.user.displayName,

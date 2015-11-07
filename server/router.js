@@ -44,8 +44,12 @@ router.get('/userauth', passport.authenticate('facebook', {
     res.redirect('/');
   });
 
+router.get('/connect/facebook', passport.authorize('facebook', {
+        scope: ['email']
+  }));
+
 passport.use(new FacebookStrategy({ // request fields from facebook
-    profileFields: ['id', 'displayName', 'photos'],
+    profileFields: ['id', 'displayName', 'photos', 'email'],
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
     callbackURL: '/auth/facebook/callback',
