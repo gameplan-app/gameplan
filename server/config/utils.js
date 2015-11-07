@@ -139,7 +139,7 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 
 function addRes(req, res) {
   Site.findOneAndUpdate({
-      'sitename': req.body.sitename
+      'site_place_id': req.body.site_name
     },
     // add new reservation to existing site doc
     {
@@ -167,7 +167,7 @@ function addRes(req, res) {
 
 exports.siteReserve = function(req, res) {
   Site.find({
-      sitename: req.body.sitename,
+      "site_place_id": req.body.site_name,
       "reservations.date": moment(req.body.date, "DDMMYYYY"),
       "reservations.time": req.body.time
     })
@@ -182,7 +182,7 @@ exports.siteReserve = function(req, res) {
 
 exports.siteDayAvailability = function(req, res) {
   var findQuery = {
-    'sitename': req.query.sitename,
+    'site_place_id': req.query.site_name,
     'reservations.date': moment(req.query.date, "DDMMYYYY")
   }
   var res_length = req.query.res_length || 1;
