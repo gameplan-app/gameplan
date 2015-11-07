@@ -26,6 +26,7 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbId": res.req.user.id,
     "fbUserName": res.req.user.displayName,
     "fbPicture": res.req.user.photos[0].value,
+    "fbEmails": res.req.user.emails
   };
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
@@ -37,7 +38,8 @@ exports.postUserInfo = function(userInfo) { // post user info to our db
   var newUser = {
     'user_fb_id': userInfo.fbId,
     'username': userInfo.fbUserName,
-    'photo': userInfo.fbPicture
+    'photo': userInfo.fbPicture,
+    'emails': userInfo.fbEmails
   };
   userCreate(newUser);
 };
