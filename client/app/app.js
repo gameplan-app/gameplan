@@ -9,7 +9,6 @@ angular.module('gameplan', [
 ])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.o
   $routeProvider
     .when('/home', {
       templateUrl: 'views/home/home.html',
@@ -38,7 +37,7 @@ angular.module('gameplan', [
       'fbUserId': fbCookie.fbId,
       'fbUserName': fbCookie.fbUserName,
       'fbPicture': fbCookie.fbPicture
-    }
+    };
     $scope.user = user;
     $scope.fbCookie = true;
   }
