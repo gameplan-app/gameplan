@@ -1,7 +1,7 @@
 // A gameplan-app project
 // =============================================================================
 
-require('dotenv').config({path: __dirname + '/../.env'});
+require('dotenv').config();
 var express = require('express'); // bring in express
 var bodyParser = require('body-parser'); // bring in body parser for parsing requests
 var router = require('./router.js'); // add link to our router file

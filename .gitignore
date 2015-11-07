@@ -8,8 +8,7 @@ tmp
 .env
 
 #secrets
-server/config/dev-config.js
-.env
+
 
 # Modules
 node_modules/
