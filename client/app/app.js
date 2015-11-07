@@ -9,7 +9,6 @@ angular.module('gameplan', [
 ])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.o
   $routeProvider
     .when('/home', {
       templateUrl: 'views/home/home.html',
