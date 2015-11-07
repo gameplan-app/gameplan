@@ -19,7 +19,7 @@ router.post('/checkin', utils.siteCheckin);
 router.post('/checkout', utils.siteCheckout);
 router.post('/reserve', utils.siteReserve);
 router.get('/reserve*', utils.siteDayAvailability);
-
+router.get('/users', utils.getAllUsers);
 
 // AUTH
 router.get('/auth/facebook/callback',
@@ -31,7 +31,7 @@ router.get('/auth/facebook/callback',
   });
 
 router.get('/auth/facebook',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', { scope: [ 'email' ] }),
   function(req, res) {
     // The request will be redirected to Facebook for authentication, so this
     // function will not be called.
@@ -44,8 +44,9 @@ router.get('/userauth', passport.authenticate('facebook', {
     res.redirect('/');
   });
 
+
 passport.use(new FacebookStrategy({ // request fields from facebook
-    profileFields: ['id', 'displayName', 'photos'],
+    profileFields: ['id', 'displayName', 'photos', 'email'],
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
     callbackURL: '/auth/facebook/callback',

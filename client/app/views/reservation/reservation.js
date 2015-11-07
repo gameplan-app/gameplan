@@ -1,4 +1,4 @@
-ßangular.module('gameplan.reservation', ['ui.bootstrap'])
+angular.module('gameplan.reservation', ['ui.bootstrap'])
 
 .controller('reservationCtrl', ['$scope', '$filter', '$location', 'reservationFactory', function($scope, $filter, $location, reservationFactory) {
 
@@ -18,9 +18,6 @@
   $scope.minDate = new Date();
 
   //needed for buttons
-  $scope.hours = [
-    '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'
-  ];
   $scope.checkModel = {
     '9': false,
     '10': false,
