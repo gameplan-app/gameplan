@@ -81,7 +81,6 @@ describe('', function() {
           .expect(200)
           .expect(function (res){
             var test_res = res.body.free_hours.indexOf(20) === -1;
-            console.log("test result", test_res);
             expect(test_res).to.be.true;
           })
           .end(done);
