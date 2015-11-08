@@ -7,6 +7,7 @@ dev:
   tasks:
     - 'concurrent:devFirst'
     - 'concurrent:devSecond'
+    - 'concurrent:devThird'
 img:
   description: 'Image tasks'
   tasks:
@@ -21,4 +22,5 @@ prod:
   tasks:
     - 'concurrent:prodFirst'
     - 'concurrent:prodSecond'
+    - 'concurrent:prodThird'
     - img
