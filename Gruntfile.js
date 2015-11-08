@@ -1,5 +1,3 @@
-
-
 module.exports = function(grunt) {
   // tells how much time each task takes
   require('time-grunt')(grunt);  

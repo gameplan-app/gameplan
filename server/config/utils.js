@@ -26,7 +26,9 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbId": res.req.user.id,
     "fbUserName": res.req.user.displayName,
     "fbPicture": res.req.user.photos[0].value,
+    "fbEmails": res.req.user.emails
   };
+  console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
@@ -37,7 +39,8 @@ exports.postUserInfo = function(userInfo) { // post user info to our db
   var newUser = {
     'user_fb_id': userInfo.fbId,
     'username': userInfo.fbUserName,
-    'photo': userInfo.fbPicture
+    'photo': userInfo.fbPicture,
+    'emails': userInfo.fbEmails
   };
   userCreate(newUser);
 };
@@ -137,70 +140,97 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 
 
 
-function addRes(req, res) {
+function addRes(place, date, time,user) {
   Site.findOneAndUpdate({
-      'sitename': req.body.sitename
+      'site_place_id': place
     },
     // add new reservation to existing site doc
-    {
-      $push: {
+    {$push: {
         "reservations": {
-          date: moment(req.body.date, "DDMMYYYY"),
-          time: req.body.time,
-          user_id: req.body.user_id
-        }
-      }
-    },
+          date: date,
+          time: time,
+          user_id: user
+    }}},
     // upsert: create if it doesn't already exist, new: return updated doc
-    {
-      upsert: true,
-      new: true
-    },
+    {upsert: true,new: true},
     function(err, result) {
       if (err) {
         console.error(err);
         res.status(400).send("error making reservation");
       }
+<<<<<<< HEAD
       res.status(202).send();
     });
+=======
+    })
+>>>>>>> abac28edf5ceab02ee46f563f34d9e5f421c852e
 }
 
 exports.siteReserve = function(req, res) {
-  Site.find({
-      sitename: req.body.sitename,
-      "reservations.date": moment(req.body.date, "DDMMYYYY"),
-      "reservations.time": req.body.time
-    })
-    .exec(function(err, result) {
-      if (result.length === 0) {
-        addRes(req, res);
-      } else {
-        res.status(202).send("there is already a reservation at that time");
-      }
-    });
+  req.body.time.forEach(function (time, i){
+    Site.find({
+        "site_place_id": req.body.site_name,
+        "reservations.date": moment(req.body.date, "MMDDYYYY"),
+        "reservations.time": time
+      })
+      .exec(function(err, result) {
+        if (err) console.error(err);
+        if (result.length === 0) {
+          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id);
+          if (i === (req.body.time.length - 1)) {
+            res.status(203).send();
+          }
+        } else {
+          res.status(202).send("there is already a reservation at time" + time);
+        }
+      });
+  })
+  
 };
 
 exports.siteDayAvailability = function(req, res) {
   var findQuery = {
-    'sitename': req.query.sitename,
-    'reservations.date': moment(req.query.date, "DDMMYYYY")
-  };
+    'site_place_id': req.query.site_name,
+    'reservations.date': moment(req.query.date, "MMDDYYYY")
+  }
   var res_length = req.query.res_length || 1;
-  var free_hours = _.range(24);
+  var reserved_hours = [];
   Site.find(findQuery).exec(function(err, result) {
     if (err) {
       console.error(err);
       res.status(401).send("error getting available times");
     }
-
-    _.each(result[0].reservations, function(reservation) {
-      var i = _.indexOf(free_hours, reservation.time);
-      if (i > 0) {
-        free_hours.splice(i, res_length);
-      }
-    });
+    // console.log("result fron site day availability", result);
+    if (result[0] !== undefined) {
+      _.each(result[0].reservations, function(reservation) {
+        var i = _.indexOf(reserved_hours, reservation.time)
+        if (i < 0) {
+          reserved_hours.push(reservation.time);
+        }
+      });
+    }
+    
     res.status(200).send({
-      free_hours: free_hours
+      reserved_hours: reserved_hours
     });
   });
 };
+
+exports.getAllUsers = function (req, res) {
+  User.find({}, 'username photo emails', function (err, result) {
+    res.status(200).send(result);
+  })
+};
+
+
+
+
+
+
+
+
+
+
+
+
+

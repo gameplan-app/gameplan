@@ -1,9 +1,52 @@
-<div ng-controller="reservationCtrl">
+<div>
   Yeahhhh we killin it
   <span><a href='/#/home'>Cancel</a></span>
+
+  <div class="friends-search" uib-dropdown>
+    <li>
+      <input type="text" class="form-control" ng-model="query" ng-focus="loadUsers()" uib-dropdown-toggle ng-click="$event.stopPropagation()">
+        
+      </input>
+    </li>
+    <ul class="uib-dropdown-menu" role="menu">
+      <li role="menuitem" ng-click="addUserEmail(user)" ng-repeat="user in friends | filter:query">
+        {{user.username}}
+      </li>
+    </ul>
+  </div>
+
   <div>
-    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-change="loadTimes()"></uib-datepicker>
-    <pre>Selected date is: <em>{{dt | date:'MMddyyyy'}}</em></pre>
-    <button ng-click="printDate()">click</button>
+    <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-click="loadTimes()"></uib-datepicker>
+  </div>
+  <div>
+	  <div>
+	      <label class="btn btn-primary" ng-model="checkModel['9']"
+	      ng-class = "{ 'disabled': takenHoursObj['9'] }" uib-btn-checkbox>9 AM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['10']"
+	       ng-class = "{ 'disabled': takenHoursObj['10']}" uib-btn-checkbox>10 AM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['11']"
+	       ng-class = "{ 'disabled': takenHoursObj['11']}" uib-btn-checkbox>11 AM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['12']"
+	       ng-class = "{ 'disabled': takenHoursObj['12']}" uib-btn-checkbox>12 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['13']"
+	       ng-class = "{ 'disabled': takenHoursObj['13']}" uib-btn-checkbox>1 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['14']"
+	       ng-class = "{ 'disabled': takenHoursObj['14']}"uib-btn-checkbox>2 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['15']"
+	       ng-class = "{ 'disabled': takenHoursObj['15']}"uib-btn-checkbox>3 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['16']"
+	       ng-class = "{ 'disabled': takenHoursObj['16']}"uib-btn-checkbox>4 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['17']"
+	       ng-class = "{ 'disabled': takenHoursObj['17']}"uib-btn-checkbox>5 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['18']"
+	       ng-class = "{ 'disabled': takenHoursObj['18']}"uib-btn-checkbox>6 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['19']"
+	       ng-class = "{ 'disabled': takenHoursObj['19']}"uib-btn-checkbox>7 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['20']"
+	       ng-class = "{ 'disabled': takenHoursObj['20']}"uib-btn-checkbox>8 PM</label>
+	      <label class="btn btn-primary" ng-model="checkModel['21']"
+	       ng-class = "{ 'disabled': takenHoursObj['21']}"uib-btn-checkbox>9 PM</label>
+	  </div>
+    <a ng-click="submitReservation()">Reserve</a> 
   </div>
 </div>
