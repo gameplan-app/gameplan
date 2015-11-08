@@ -8,7 +8,7 @@ dev:
     - 'concurrent:devFirst'
     - 'concurrent:devSecond'
     - 'concurrent:devThird'
-    - 'concurrent:start'
+    - start
 img:
   description: 'Image tasks'
   tasks:
@@ -18,6 +18,10 @@ devimg:
   tasks:
     - dev
     - img
+start:
+  description: 'Start server'
+  tasks:
+    - shell
 prod:
   description: 'Production build'
   tasks:
@@ -25,4 +29,4 @@ prod:
     - 'concurrent:prodSecond'
     - 'concurrent:prodThird'
     - img
-    - 'concurrent:start'
+    - start

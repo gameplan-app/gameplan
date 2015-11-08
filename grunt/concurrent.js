@@ -24,6 +24,7 @@ module.exports = {
   prodFirst: [
     'clean',
     'jshint'
+    // 'shell:startServer'
   ],
   prodSecond: [
     'sass:prod',
@@ -36,10 +37,10 @@ module.exports = {
   // Image Tasks
   imgFirst: [
     'imagemin'
-  ],
+  ]
 
   // Open in browser and start server
-  start: [
-    'shell'
-  ]
+  // start: [
+  //   'shell:openInBrowser'
+  // ]
 };
