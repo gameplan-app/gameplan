@@ -158,12 +158,7 @@ function addRes(place, date, time,user) {
         console.error(err);
         res.status(400).send("error making reservation");
       }
-<<<<<<< HEAD
-      res.status(202).send();
-    });
-=======
     })
->>>>>>> abac28edf5ceab02ee46f563f34d9e5f421c852e
 }
 
 exports.siteReserve = function(req, res) {
