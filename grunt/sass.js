@@ -4,8 +4,7 @@ module.exports = {
   // development settings
   dev: {
     options: {
-      outputStyle: 'nested',
-      sourceMap: true
+      outputStyle: 'nested'
     },
     files: [{
       expand: true,
@@ -18,8 +17,7 @@ module.exports = {
   // Production settings
   prod: {
     options: {
-      outputStyle: 'compressed',
-      sourceMap: false
+      outputStyle: 'compact'
     },
     files: [{
       expand: true,
@@ -28,5 +26,5 @@ module.exports = {
       dest: 'client/app/dist/css',
       ext: '.css'
     }]
-  }
+  },
 };
