@@ -24,11 +24,12 @@ module.exports = {
   ],
   prodSecond: [
     'sass:prod',
-    'uglify'
+    'uglify',
+    'concat'
   ],
 
   // Image Tasks
   imgFirst: [
-    'imagein'
+    'imagemin'
   ]
 };
