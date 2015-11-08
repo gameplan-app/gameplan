@@ -3,9 +3,9 @@ module.exports = {
   all: {
     files: [{
       expand: true,
-      cwd: 'client/app/dist/js',
+      cwd: 'client/app/dist/',
       src: '**/*.js',
-      dest: 'client/app/dist/js',
+      dest: 'client/app/dist/',
       ext: '.min.js'
     }]
   }
