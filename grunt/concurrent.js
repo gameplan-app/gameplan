@@ -36,5 +36,10 @@ module.exports = {
   // Image Tasks
   imgFirst: [
     'imagemin'
+  ],
+
+  // Open in browser and start server
+  start: [
+    'shell'
   ]
 };

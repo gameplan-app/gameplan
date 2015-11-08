@@ -37,6 +37,7 @@
     "grunt-contrib-uglify": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-sass": "^1.1.0",
+    "grunt-shell": "^1.1.2",
     "jit-grunt": "^0.9.1",
     "load-grunt-config": "^0.19.0"
   }

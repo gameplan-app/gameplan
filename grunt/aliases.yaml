@@ -8,6 +8,7 @@ dev:
     - 'concurrent:devFirst'
     - 'concurrent:devSecond'
     - 'concurrent:devThird'
+    - 'concurrent:start'
 img:
   description: 'Image tasks'
   tasks:
@@ -24,3 +25,4 @@ prod:
     - 'concurrent:prodSecond'
     - 'concurrent:prodThird'
     - img
+    - 'concurrent:start'
