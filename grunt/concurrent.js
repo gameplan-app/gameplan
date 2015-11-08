@@ -14,6 +14,9 @@ module.exports = {
   ],
   devSecond: [
     'sass:dev',
+    'concat'
+  ],
+  devThird: [
     'uglify'
   ],
 
@@ -24,8 +27,10 @@ module.exports = {
   ],
   prodSecond: [
     'sass:prod',
-    'uglify',
     'concat'
+  ],
+  prodThird: [
+    'uglify'
   ],
 
   // Image Tasks
