@@ -24,13 +24,13 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
 
   $scope.addUserEmail = function(user){
     for(var i = 0; i < $scope.userListForEmail.length; i++){
-      if($scope.userListForEmail[i][1] === user.emails[0].value){
+      if($scope.userListForEmail[i]._id === user._id){
         console.log("user is already added")
         return;
       }
     }
-    $scope.userListForEmail.push([user.username, user.emails[0].value]);
-    console.log($scope.userListForEmail)
+    $scope.userListForEmail.push(user);
+    console.log($scope.userListForEmail);
   }
 
   $scope.today();
@@ -88,6 +88,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     }, $scope);
   }
 
+  $scope.loadUsers();
 
 }])
 
