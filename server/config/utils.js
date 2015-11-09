@@ -13,6 +13,9 @@ var moment = require('moment'); // library for dealing with dates and times
 var nodemailer = require("nodemailer"); //email from node
 var _ = require("underscore");
 
+//EMAIL OBJ_INFO
+var emailInfoObj = {};
+
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
   if (req.isAuthenticated()) {
@@ -32,6 +35,8 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
+  emailInfoObj.fbId = fbUserInfo.fbId;
+  console.log(emailInfoObj);
 };
 
 exports.postUserInfo = function(userInfo) { // post user info to our db
@@ -102,7 +107,14 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
 
 //EMAIL CONFIRMATION
 
-function emailConfirmation  (email, reservationDateStr, reservationTimeArr, address) {
+function emailConfirmation(fb_id, email, reservationDateStr, reservationTimeArr, address) {
+
+//GET USERS EMAIL
+  User.find({
+    "user_fb_id": fb_id
+  }, 'username emails[0].value').exec(function(err, results) {
+      email = results;
+  });
 
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
@@ -113,6 +125,8 @@ function emailConfirmation  (email, reservationDateStr, reservationTimeArr, addr
     }
   });
 
+  //EMAIL SETTINGS
+
   mailOpts = {
     from: "game.plan.schedule@gmail.com",
     to: email,
@@ -120,13 +134,14 @@ function emailConfirmation  (email, reservationDateStr, reservationTimeArr, addr
     text: "Hi," +
       "\nYou have successfully reserved a court! Have fun!" +
       //"\n Court : " + court +
-      "\n When : " + reservationTimeArr + " on " +  reservationDateStr +
+      "\n When : " + reservationTimeArr + " on " + reservationDateStr +
       "\n Where : " + address +
       "\n" +
       "Game Time!\n" +
       "-Gameplan Team"
   };
 
+  //SEND EMAIL
   smtpTransport.sendMail(mailOpts, function(error) {
     if (error) {
       console.log(error);
@@ -138,19 +153,25 @@ function emailConfirmation  (email, reservationDateStr, reservationTimeArr, addr
 
 
 
-function addRes(place, date, time,user) {
+function addRes(place, date, time, user) {
   Site.findOneAndUpdate({
       'site_place_id': place
     },
     // add new reservation to existing site doc
-    {$push: {
+    {
+      $push: {
         "reservations": {
           date: date,
           time: time,
           user_id: user
-    }}},
-    // upsert: create if it doesn't already exist, new: return updated doc
-    {upsert: true,new: true},
+        }
+      }
+    },
+    // upsert: create if it d oesn't already exist, new: return updated doc
+    {
+      upsert: true,
+      new: true
+    },
     function(err, result) {
       if (err) {
         console.error(err);
@@ -161,7 +182,7 @@ function addRes(place, date, time,user) {
 
 exports.siteReserve = function(req, res) {
   console.log(req.body);
-  req.body.time.forEach(function (time, i){
+  req.body.time.forEach(function(time, i) {
     Site.find({
         "site_place_id": req.body.site_name,
         "reservations.date": moment(req.body.date, "MMDDYYYY"),
@@ -171,7 +192,7 @@ exports.siteReserve = function(req, res) {
         if (err) console.error(err);
         if (result.length === 0) {
           addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id);
-          emailConfirmation('spate67@gmail.com', req.body.date, req.body.time, null);
+          emailConfirmation(emailInfoObj.fbId, req.body.date, req.body.time, req.body.site_name);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
@@ -211,9 +232,8 @@ exports.siteDayAvailability = function(req, res) {
   })
 };
 
-exports.getAllUsers = function (req, res) {
-  User.find({}, 'username photo emails', function (err, result) {
+exports.getAllUsers = function(req, res) {
+  User.find({}, 'username photo emails', function(err, result) {
     res.status(200).send(result);
   })
 };
-

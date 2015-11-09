@@ -119,6 +119,7 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
         site_name: venue,
         date: date,
         time: time
+        //need to add fb user which is logged in fb id
       }
     }).then(function successCallback(response) {
       callback(response)
