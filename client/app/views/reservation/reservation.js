@@ -23,9 +23,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   };
 
   $scope.addUserEmail = function(user){
-    console.log(user)
+    console.log("user", user)
     for(var i = 0; i < $scope.userListForEmail.length; i++){
-      if($scope.userListForEmail[i].id === user._id){
+      if($scope.userListForEmail[i]._id === user._id){
         console.log("user is already added")
         return;
       }
