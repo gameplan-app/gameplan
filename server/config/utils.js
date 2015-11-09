@@ -173,9 +173,7 @@ exports.siteReserve = function(req, res) {
       .exec(function(err, result) {
         if (err) console.error(err);
         if (result.length === 0) {
-          console.log("sent from front-end", req.body);
-          console.log("users added reservation", req.body.usersInvited);
-;          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
+          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
