@@ -3,12 +3,13 @@
     margin: 10px;
     background-color: $secondaryColor;
     color: $mainColor;
-    :active {
-      background-color: $redColor;
-    }
   }
   .mainButton:hover {
     color: $secondaryColor;
     background-color: $mainColor;
+  }
+  .mainButton.active {
+    background-color: #3D8ADA;
+    color: $mainColor;
   }
 }
