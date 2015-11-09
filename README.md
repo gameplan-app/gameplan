@@ -17,8 +17,8 @@ Build site locally:
 
 * npm install
 * bower install
-* grunt 
-* open localhost:8080 in browser
+* grunt build
+* grunt shell [opens app in chrome, and watches for updated files]
 
 ## Setup Google Maps and Facebook APIs
 In [google developers console](https://console.developers.google.com), under **API and auth**, select **Credentials**. In the list of apps, select the app name. Under **Accept requests from these HTTP referrers**, add your development URI (http://localhost:8000) and deployment URI.

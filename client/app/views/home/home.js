@@ -34,19 +34,19 @@ angular.module('gameplan.home', [])
     lat: 37.7833,
     lng: -122.4167
   };
-  var userMarkerImage = '../dist/images/images/centerflag.png';
-  var blueDotImage = '../dist/images/images/bluedot.png';
+  var userMarkerImage = '../assets/images/centerflag.png';
+  var blueDotImage = '../assets/images/bluedot.png';
   var sportIcons = {
-    'Basketball Court': '../dist/images/images/basketball.png',
-    'Soccer Field': '../dist/images/images/soccer.png',
-    'Tennis Court': '../dist/images/images/tennis.png',
-    'Baseball Field': '../dist/images/images/baseball.png',
-    'Softball Field': '../dist/images/images/softball.png',
-    'Gym': '../dist/images/images/gym.png',
-    'Climbing Gym': '../dist/images/images/climbing.png',
-    'Golf Course': '../dist/images/images/golf.png',
-    'Racquetball Court': '../dist/images/images/racketball.png',
-    'Squash Court': '../dist/images/images/squash.png'
+    'Basketball Court': '../assets/images/basketball.png',
+    'Soccer Field': '../assets/images/soccer.png',
+    'Tennis Court': '../assets/images/tennis.png',
+    'Baseball Field': '../assets/images/baseball.png',
+    'Softball Field': '../assets/images/softball.png',
+    'Gym': '../assets/images/gym.png',
+    'Climbing Gym': '../assets/images/climbing.png',
+    'Golf Course': '../assets/images/golf.png',
+    'Racquetball Court': '../assets/images/racketball.png',
+    'Squash Court': '../assets/images/squash.png'
   };
   var markers = [];
   var infowindow;
