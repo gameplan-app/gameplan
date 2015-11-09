@@ -1,48 +1,44 @@
 <div id="reserve-page" class="container">
   <div class="row">
-    <h3 style="color:#34495e ">Invite Friends</h3>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-offset-2 col-md-3">
+      <h3>Chose Your Date</h3>
       <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="false" class="well well-sm" ng-click="loadTimes()"></uib-datepicker>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-5 col-md-offset-1">
+      <h3>Chose Your Time/s</h3>
       <div class="button-group times">
         <div>
-          <label class="btn mainButton" ng-model="checkModel['10']" ng-class="{ 'disabled': takenHoursObj['10']}" uib-btn-checkbox>10:00</label>
-          <label class="btn mainButton" ng-model="checkModel['11']" ng-class="{ 'disabled': takenHoursObj['11']}" uib-btn-checkbox>11:00</label>
-          <label class="btn mainButton" ng-model="checkModel['12']" ng-class="{ 'disabled': takenHoursObj['12']}" uib-btn-checkbox>12:00</label>
-          <label class="btn mainButton" ng-model="checkModel['13']" ng-class="{ 'disabled': takenHoursObj['13']}" uib-btn-checkbox>13:00</label>
+          <label class="btn timeButton" ng-model="checkModel['10']" ng-class="{ 'disabled': takenHoursObj['10']}" uib-btn-checkbox>10:00</label>
+          <label class="btn timeButton" ng-model="checkModel['11']" ng-class="{ 'disabled': takenHoursObj['11']}" uib-btn-checkbox>11:00</label>
+          <label class="btn timeButton" ng-model="checkModel['12']" ng-class="{ 'disabled': takenHoursObj['12']}" uib-btn-checkbox>12:00</label>
+          <label class="btn timeButton" ng-model="checkModel['13']" ng-class="{ 'disabled': takenHoursObj['13']}" uib-btn-checkbox>13:00</label>
         </div>
         <div>
-          <label class="btn mainButton" ng-model="checkModel['14']" ng-class="{ 'disabled': takenHoursObj['14']}" uib-btn-checkbox>14:00</label>
-          <label class="btn mainButton" ng-model="checkModel['15']" ng-class="{ 'disabled': takenHoursObj['15']}" uib-btn-checkbox>15:00</label>
-          <label class="btn mainButton" ng-model="checkModel['16']" ng-class="{ 'disabled': takenHoursObj['16']}" uib-btn-checkbox>16:00</label>
-          <label class="btn mainButton" ng-model="checkModel['17']" ng-class="{ 'disabled': takenHoursObj['17']}" uib-btn-checkbox>17:00</label>
+          <label class="btn timeButton" ng-model="checkModel['14']" ng-class="{ 'disabled': takenHoursObj['14']}" uib-btn-checkbox>14:00</label>
+          <label class="btn timeButton" ng-model="checkModel['15']" ng-class="{ 'disabled': takenHoursObj['15']}" uib-btn-checkbox>15:00</label>
+          <label class="btn timeButton" ng-model="checkModel['16']" ng-class="{ 'disabled': takenHoursObj['16']}" uib-btn-checkbox>16:00</label>
+          <label class="btn timeButton" ng-model="checkModel['17']" ng-class="{ 'disabled': takenHoursObj['17']}" uib-btn-checkbox>17:00</label>
         </div>
         <div>
-          <label class="btn mainButton" ng-model="checkModel['18']" ng-class="{ 'disabled': takenHoursObj['18']}" uib-btn-checkbox>18:00</label>
-          <label class="btn mainButton" ng-model="checkModel['19']" ng-class="{ 'disabled': takenHoursObj['19']}" uib-btn-checkbox>19:00</label>
-          <label class="btn mainButton" ng-model="checkModel['20']" ng-class="{ 'disabled': takenHoursObj['20']}" uib-btn-checkbox>20:00</label>
-          <label class="btn mainButton" ng-model="checkModel['20']" ng-class="{ 'disabled': takenHoursObj['20']}" uib-btn-checkbox>21:00</label>
+          <label class="btn timeButton" ng-model="checkModel['18']" ng-class="{ 'disabled': takenHoursObj['18']}" uib-btn-checkbox>18:00</label>
+          <label class="btn timeButton" ng-model="checkModel['19']" ng-class="{ 'disabled': takenHoursObj['19']}" uib-btn-checkbox>19:00</label>
+          <label class="btn timeButton" ng-model="checkModel['20']" ng-class="{ 'disabled': takenHoursObj['20']}" uib-btn-checkbox>20:00</label>
+          <label class="btn timeButton" ng-model="checkModel['21']" ng-class="{ 'disabled': takenHoursObj['21']}" uib-btn-checkbox>21:00</label>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 col-md-offset-2">
+      <h3 style="color:#34495e ">Invite Your Friends</h3>
       <input type="text" ng-model="selected" uib-typeahead="friend as friend.username for friend in friends | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="addUserEmail($item); selected='';">
-    </div>
-    <div class="col-md-6">
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="friend in userListForEmail track by $index">{{ friend.username }}</li>
       </ul>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <a class="btn mainButton" ng-click="submitReservation()">Reserve</a>
-      <a class="btn mainButton" href='/#/home'>Cancel</a>
+    <div class="col-md-2" style="margin-top:56px;">
+        <a class="btn actionButton" ng-click="submitReservation()">Reserve</a>
+        <a class="btn actionButton" href='/#/home'>Cancel</a>
     </div>
   </div>
 </div>
