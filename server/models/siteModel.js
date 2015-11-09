@@ -14,6 +14,10 @@ var siteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  address: {
+    type:String,
+    required: false
+  },
 
   checkins: {
     type: Number,
@@ -34,7 +38,18 @@ var siteSchema = new mongoose.Schema({
     user_id: {
       type: String,
       required: false
-    }
+    },
+
+    usersInvited: [{
+      name: {
+        type:String,
+        required: false
+      },
+      email: {
+        type: String,
+        required: false
+      }
+    }]
   }]
 });
 

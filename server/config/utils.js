@@ -53,6 +53,7 @@ exports.postSiteInfo = function(req, res) { // interact with db to post site's i
   var newSite = {
     'site_place_id': req.body.place_id,
     'sitename': req.body.name,
+    'address':req.body.vicinity,
     'checkins': 0
   };
   siteCreate(newSite);
@@ -140,7 +141,7 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
 
 
 
-function addRes(place, date, time,user) {
+function addRes(place, date, time,user, usersInvited) {
   Site.findOneAndUpdate({
       'site_place_id': place
     },
@@ -149,7 +150,8 @@ function addRes(place, date, time,user) {
         "reservations": {
           date: date,
           time: time,
-          user_id: user
+          user_id: user,
+          usersInvited: usersInvited
     }}},
     // upsert: create if it doesn't already exist, new: return updated doc
     {upsert: true,new: true},
@@ -171,7 +173,7 @@ exports.siteReserve = function(req, res) {
       .exec(function(err, result) {
         if (err) console.error(err);
         if (result.length === 0) {
-          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id);
+          addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
