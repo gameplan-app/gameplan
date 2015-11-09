@@ -18,7 +18,7 @@ exports.ensureAuthenticated = function(req, res, next) { // make sure user auth 
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login')
+  res.redirect('/login');
 };
 
 exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
@@ -158,7 +158,7 @@ function addRes(place, date, time,user) {
         console.error(err);
         res.status(400).send("error making reservation");
       }
-    })
+    });
 }
 
 exports.siteReserve = function(req, res) {
@@ -179,7 +179,7 @@ exports.siteReserve = function(req, res) {
           res.status(202).send("there is already a reservation at time" + time);
         }
       });
-  })
+  });
   
 };
 
@@ -187,7 +187,7 @@ exports.siteDayAvailability = function(req, res) {
   var findQuery = {
     'site_place_id': req.query.site_name,
     'reservations.date': moment(req.query.date, "MMDDYYYY")
-  }
+  };
   var res_length = req.query.res_length || 1;
   var reserved_hours = [];
   Site.find(findQuery).exec(function(err, result) {
@@ -198,7 +198,7 @@ exports.siteDayAvailability = function(req, res) {
     // console.log("result fron site day availability", result);
     if (result[0] !== undefined) {
       _.each(result[0].reservations, function(reservation) {
-        var i = _.indexOf(reserved_hours, reservation.time)
+        var i = _.indexOf(reserved_hours, reservation.time);
         if (i < 0) {
           reserved_hours.push(reservation.time);
         }
@@ -208,13 +208,13 @@ exports.siteDayAvailability = function(req, res) {
     res.status(200).send({
       reserved_hours: reserved_hours
     });
-  })
+  });
 };
 
 exports.getAllUsers = function (req, res) {
   User.find({}, 'username photo emails', function (err, result) {
     res.status(200).send(result);
-  })
+  });
 };
 
 

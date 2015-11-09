@@ -41,7 +41,7 @@ angular.module('gameplan', [
       'fbUserId': fbCookie.fbId,
       'fbUserName': fbCookie.fbUserName,
       'fbPicture': fbCookie.fbPicture
-    }
+    };
     $scope.user = user;
     $scope.fbCookie = true;
   }

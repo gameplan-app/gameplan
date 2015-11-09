@@ -6,6 +6,7 @@ logs/*
 tmp
 .idea
 .env
+server/config/dev-config.js
 
 #secrets
 server/config/dev-config.js
