@@ -1,0 +1,14 @@
+#reserve-page {
+  .mainButton {
+    margin: 10px;
+    background-color: $secondaryColor;
+    color: $mainColor;
+    :active {
+      background-color: $redColor;
+    }
+  }
+  .mainButton:hover {
+    color: $secondaryColor;
+    background-color: $mainColor;
+  }
+}
