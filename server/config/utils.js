@@ -100,11 +100,9 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
-//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
+//EMAIL CONFIRMATION
 
-//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
-
-exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
+function emailConfirmation  (email, reservationDateStr, reservationTimeArr, address) {
 
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
@@ -118,11 +116,11 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
   mailOpts = {
     from: "game.plan.schedule@gmail.com",
     to: email,
-    subject: "Gameplan Schedule on " + reservationDate + " at " + reservationTime + "!",
+    subject: "Gameplan Schedule on " + reservationDateStr + " at " + reservationTimeArr + "!",
     text: "Hi," +
       "\nYou have successfully reserved a court! Have fun!" +
-      "\n Court : " + court +
-      "\n When : " + reservationTime + " on " + reservationDate +
+      //"\n Court : " + court +
+      "\n When : " + reservationTimeArr + " on " +  reservationDateStr +
       "\n Where : " + address +
       "\n" +
       "Game Time!\n" +
@@ -162,6 +160,7 @@ function addRes(place, date, time,user) {
 }
 
 exports.siteReserve = function(req, res) {
+  console.log(req.body);
   req.body.time.forEach(function (time, i){
     Site.find({
         "site_place_id": req.body.site_name,
@@ -172,6 +171,7 @@ exports.siteReserve = function(req, res) {
         if (err) console.error(err);
         if (result.length === 0) {
           addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id);
+          emailConfirmation('spate67@gmail.com', req.body.date, req.body.time, null);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
@@ -180,7 +180,7 @@ exports.siteReserve = function(req, res) {
         }
       });
   })
-  
+
 };
 
 exports.siteDayAvailability = function(req, res) {
@@ -204,7 +204,7 @@ exports.siteDayAvailability = function(req, res) {
         }
       });
     }
-    
+
     res.status(200).send({
       reserved_hours: reserved_hours
     });
@@ -216,16 +216,4 @@ exports.getAllUsers = function (req, res) {
     res.status(200).send(result);
   })
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
