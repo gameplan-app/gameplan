@@ -37,8 +37,8 @@
             <input type="text" ng-model="selected" uib-typeahead="friend as friend.username for friend in friends | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="addUserEmail($item); selected='';">
         </div>
         <div class="col-md-6">
-            <ul class="list-group" ng-repeat="friend in userListForEmail track by $index">
-                <li class="list-group-item">{{ friend.username }}</li>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="friend in userListForEmail track by $index">{{ friend.username }}</li>
             </ul>
         </div>
     </div>
