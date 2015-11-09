@@ -23,7 +23,6 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   };
 
   $scope.addUserEmail = function(user){
-    console.log("user", user)
     for(var i = 0; i < $scope.userListForEmail.length; i++){
       if($scope.userListForEmail[i]._id === user._id){
         console.log("user is already added")
@@ -81,11 +80,12 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   $scope.submitReservation = function() {
     var date = $filter('date')($scope.dt, 'MMddyyyy')
     var venue = $location.url().split("/")[2];
+
     reservationFactory.sendTimes(date, venue, $scope.checkResults, function(response) {
       $scope.checkResults = [];
       console.log("successfuly reserved venue");
       $location.path("/#/home");
-    });
+    }, $scope);
   }
 
   $scope.loadUsers();
@@ -105,7 +105,6 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
         date: date
       }
     }).then(function successCallback(response) {
-      console.log(response);
       callback(response)
     }, function errorCallback(response) {
       console.log("failed getting hours from server");
@@ -113,14 +112,20 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   }
 
   //send selected times to database
-  service.sendTimes = function(date, venue, time, callback) {
+  service.sendTimes = function(date, venue, time, callback, $scope) {
+    var userEmails = [];
+    _.each($scope.userListForEmail, function (user) {
+      userEmails.push({name:user[0], email:user[1]});
+    });
     $http({
       url: '/reserve',
       method: 'POST',
       data: {
         site_name: venue,
         date: date,
-        time: time
+        time: time,
+        user_id: $scope.user.fbUserId,
+        usersInvited: userEmails
       }
     }).then(function successCallback(response) {
       callback(response)

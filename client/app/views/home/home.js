@@ -240,7 +240,6 @@ angular.module('gameplan.home', [])
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         $scope.sitesResults = results; // populate site list with results
         $scope.$apply(); // force update the $scope
-
         _.each(results, function(place) { // create markers for results
           $http.post('/siteinfo', place) // post site info to server
             .then(function successCallback(response) {
