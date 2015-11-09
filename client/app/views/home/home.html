@@ -56,9 +56,7 @@
             </span>
             <button class="checkin-button checkin btn" ng-show="!elm.checkedin" ng-click="siteCheckin(elm)"><i class="fa fa-square-o"></i></button>
             <button class="checkin-button checkout btn" ng-show="elm.checkedin" ng-click="siteCheckout(elm)"><i class="fa fa-check-square-o"></i></button>
-            <span class="opening-info open-now" ng-show="{{elm.opening_hours.open_now}}">Open Now</span>
-            <span class="opening-info close-now" ng-show="{{elm.opening_hours.open_now === false}}">Closed</span>
-            <span><a href="/#/reservation/{{elm.place_id}}">Reserve</a></span>
+            <a class="btn btn-default reserveButton" href="/#/reservation/{{elm.place_id}}">Reserve</a>
           </li>
         </ul>
       </div>

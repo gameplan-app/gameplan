@@ -1,7 +1,6 @@
 #home-page {
-
   // Map and sites navigation bar
-  .navbar{
+  .navbar {
     &.site-selection {
       .container-fluid {
         padding-left: 0;
@@ -24,8 +23,10 @@
               a {
                 i {
                   transition: all 1s linear;
-                  -ms-transform: rotate(360deg); /* IE 9 */
-                  -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+                  -ms-transform: rotate(360deg);
+                  /* IE 9 */
+                  -webkit-transform: rotate(360deg);
+                  /* Chrome, Safari, Opera */
                   transform: rotate(360deg);
                 }
               }
@@ -43,23 +44,43 @@
               color: $secondaryColor;
               font-size: 16px;
               font-weight: bold;
-              span{
+              span {
                 background-size: cover;
                 position: relative;
                 top: 2px;
                 width: 16px;
                 height: 16px;
                 display: inline-block;
-                &.Basketball { background-image: url('../../assets/images/basketball.png'); }
-                &.Rock-Climbing { background-image: url('../../assets/images/climbing.png'); }
-                &.Baseball { background-image: url('../../assets/images/baseball.png'); }
-                &.Soccer { background-image: url('../../assets/images/soccer.png'); }
-                &.Tennis { background-image: url('../../assets/images/tennis.png'); }
-                &.Gym { background-image: url('../../assets/images/gym.png'); }
-                &.Golf { background-image: url('../../assets/images/golf.png'); }
-                &.Squash { background-image: url('../../assets/images/squash.png'); }
-                &.Softball { background-image: url('../../assets/images/softball.png'); }
-                &.Racquetball { background-image: url('../../assets/images/racketball.png'); }
+                &.Basketball {
+                  background-image: url('../../assets/images/basketball.png');
+                }
+                &.Rock-Climbing {
+                  background-image: url('../../assets/images/climbing.png');
+                }
+                &.Baseball {
+                  background-image: url('../../assets/images/baseball.png');
+                }
+                &.Soccer {
+                  background-image: url('../../assets/images/soccer.png');
+                }
+                &.Tennis {
+                  background-image: url('../../assets/images/tennis.png');
+                }
+                &.Gym {
+                  background-image: url('../../assets/images/gym.png');
+                }
+                &.Golf {
+                  background-image: url('../../assets/images/golf.png');
+                }
+                &.Squash {
+                  background-image: url('../../assets/images/squash.png');
+                }
+                &.Softball {
+                  background-image: url('../../assets/images/softball.png');
+                }
+                &.Racquetball {
+                  background-image: url('../../assets/images/racketball.png');
+                }
               }
             }
           }
@@ -72,79 +93,83 @@
       }
     }
   }
-
   // Map style block
   .map-site {
     #map {
-      min-height : 500px;
+      min-height: 500px;
       border: 1px solid $secondaryColor;
       // Google map info for each site
       .infowindow-open {
         font-weight: bold;
         &.open {
-         color: $greenColor;
-       }
-       &.closed {
-        color: $redColor;
+          color: $greenColor;
+        }
+        &.closed {
+          color: $redColor;
+        }
       }
     }
-  }
-  // Site list style block
-  .list-group {
-    .empty-list {
-      margin-top: 10px;
-      font-weight: bold;
-      padding-left: 2px;
-    }
-    ul {
-      padding: 0px;
-      list-style: none;
-      overflow: scroll;
-      max-height: 490px;
-      li {
-        color: $secondaryColor;
-        font-size: 14px;
-        padding: 8px 5px;
-        border-bottom: 1px dashed #CCC;
-        &:hover {
-          cursor: pointer;
-          background-color: #EAEAEA;
-        }
-        // Site name
-        .sitename {
-          margin-bottom: 2px;
-        }
-        // User checkin icon and number
-        .user-checkins {
-          min-width: 30px;
-          display: inline-block;
-          i {
+    // Site list style block
+    .list-group {
+      .reserveButton {
+        background-color: $secondaryColor;
+        color: $mainColor;
+      }
+      .empty-list {
+        margin-top: 10px;
+        font-weight: bold;
+        padding-left: 2px;
+      }
+      ul {
+        padding: 0px;
+        list-style: none;
+        overflow: scroll;
+        max-height: 490px;
+        li {
+          color: $secondaryColor;
+          font-size: 14px;
+          padding: 8px 5px;
+          border-bottom: 1px dashed #CCC;
+          &:hover {
+            cursor: pointer;
+            background-color: #EAEAEA;
+          }
+          // Site name
+          .sitename {
+            margin-bottom: 2px;
+          }
+          // User checkin icon and number
+          .user-checkins {
+            min-width: 30px;
+            display: inline-block;
+            i {
+              margin-right: 5px;
+            }
+          }
+          // User checkin button
+          .checkin-button,
+          .checkin-button:focus {
+            background: none;
+            font-size: 20px;
+            padding: 0;
             margin-right: 5px;
+            line-height: 20px;
+            min-width: 25px;
+            text-align: left;
+            outline: none;
           }
-        }
-        // User checkin button
-        .checkin-button, .checkin-button:focus  {
-          background: none;
-          font-size: 20px;
-          padding: 0;
-          margin-right: 5px;
-          line-height: 20px;
-          min-width: 25px;
-          text-align: left;
-          outline: none;
-        }
-        .opening-info {
-          padding-left: 10px;
-          font-weight: bold;
-          &.open-now {
-            color: $greenColor;
-          }
-          &.close-now {
-            color: $redColor;
+          .opening-info {
+            padding-left: 10px;
+            font-weight: bold;
+            &.open-now {
+              color: $greenColor;
+            }
+            &.close-now {
+              color: $redColor;
+            }
           }
         }
       }
     }
   }
-}
 }
