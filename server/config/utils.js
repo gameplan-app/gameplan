@@ -13,9 +13,6 @@ var moment = require('moment'); // library for dealing with dates and times
 var nodemailer = require("nodemailer"); //email from node
 var _ = require("underscore");
 
-//EMAIL OBJ_INFO
-var emailInfoObj = {};
-
 // AUTH & USER
 exports.ensureAuthenticated = function(req, res, next) { // make sure user auth is valid, use this for anything that needs to be protected
   if (req.isAuthenticated()) {
@@ -31,12 +28,10 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbPicture": res.req.user.photos[0].value,
     "fbEmails": res.req.user.emails
   };
-  console.log(fbUserInfo);
+  //console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
-  emailInfoObj.fbId = fbUserInfo.fbId;
-  console.log(emailInfoObj);
 };
 
 exports.postUserInfo = function(userInfo) { // post user info to our db
@@ -58,7 +53,7 @@ exports.postSiteInfo = function(req, res) { // interact with db to post site's i
   var newSite = {
     'site_place_id': req.body.place_id,
     'sitename': req.body.name,
-    'address':req.body.vicinity,
+    'address': req.body.vicinity,
     'checkins': 0
   };
   siteCreate(newSite);
@@ -108,15 +103,7 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
 
 //EMAIL CONFIRMATION
 
-function emailConfirmation(fb_id, email, reservationDateStr, reservationTimeArr, address) {
-
-//GET USERS EMAIL
-  User.find({
-    "user_fb_id": fb_id
-  }, 'username emails[0].value').exec(function(err, results) {
-      email = results;
-  });
-
+function emailConfirmation(user_id, reservationDateStr, reservationTimeArr, site_id) {
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
     service: "Gmail",
@@ -128,34 +115,49 @@ function emailConfirmation(fb_id, email, reservationDateStr, reservationTimeArr,
 
   //EMAIL SETTINGS
 
-  mailOpts = {
-    from: "game.plan.schedule@gmail.com",
-    to: email,
-    subject: "Gameplan Schedule on " + reservationDateStr + " at " + reservationTimeArr + "!",
-    text: "Hi," +
-      "\nYou have successfully reserved a court! Have fun!" +
-      //"\n Court : " + court +
-      "\n When : " + reservationTimeArr + " on " + reservationDateStr +
-      "\n Where : " + address +
-      "\n" +
-      "Game Time!\n" +
-      "-Gameplan Team"
+  var emailObj = {
+    reservationDate: reservationDateStr,
+    reservationTime: reservationTimeArr
   };
 
-  //SEND EMAIL
-  smtpTransport.sendMail(mailOpts, function(error) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email was sent!");
-    }
-  });
+  User.findOne({
+      "user_fb_id": user_id
+    }, 'username emails').exec(function(err, results) {
+      emailObj.user_email = results.emails[0].value;
+    })
+    .then(function(user) {
+      Site.findOne({
+          'site_place_id': site_id
+        }, 'sitename address').exec(function(err, results) {
+          emailObj.address = results.address;
+          emailObj.sitename = results.sitename;
+          mailOpts = {
+            from: "game.plan.schedule@gmail.com",
+            to: emailObj.user_email,
+            subject: "Gameplan Schedule on " + emailObj.reservationDate + "!",
+            text: "Hi," +
+              "\n\nYou have successfully reserved a court! Have fun!" +
+              "\n Court : " + emailObj.sitename +
+              "\n When : " + emailObj.reservationTime + " on " + emailObj.reservationDate +
+              "\n Where : " + emailObj.address +
+              "\nGame Time!\n" +
+              "-Gameplan Team"
+          };
+        })
+        .then(function(site) {
+          smtpTransport.sendMail(mailOpts, function(error) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email was sent!");
+            }
+          });
+        });
+    });
 };
 
 
-
-
-function addRes(place, date, time,user, usersInvited) {
+function addRes(place, date, time, user, usersInvited) {
   Site.findOneAndUpdate({
       'site_place_id': place
     },
@@ -167,9 +169,14 @@ function addRes(place, date, time,user, usersInvited) {
           time: time,
           user_id: user,
           usersInvited: usersInvited
-    }}},
+        }
+      }
+    },
     // upsert: create if it doesn't already exist, new: return updated doc
-    {upsert: true,new: true},
+    {
+      upsert: true,
+      new: true
+    },
     function(err, result) {
       if (err) {
         console.error(err);
@@ -179,7 +186,6 @@ function addRes(place, date, time,user, usersInvited) {
 }
 
 exports.siteReserve = function(req, res) {
-  console.log(req.body);
   req.body.time.forEach(function(time, i) {
     Site.find({
         "site_place_id": req.body.site_name,
@@ -190,7 +196,7 @@ exports.siteReserve = function(req, res) {
         if (err) console.error(err);
         if (result.length === 0) {
           addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
-          emailConfirmation(emailInfoObj.fbId, req.body.date, req.body.time, req.body.site_name);
+          emailConfirmation(req.body.user_id, req.body.date, req.body.time, req.body.site_name);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
