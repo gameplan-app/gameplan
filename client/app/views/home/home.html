@@ -16,14 +16,6 @@
               <li class="sport-item" ng-repeat="(sport, keyword) in sports" ng-click="populateList(keyword, sport)"><a>{{ sport }}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Date<span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu sport">
-              <li><a>...</a></li>
-            </ul>
-          </li>
           <li class="selected-sport">
             <a>
               <span class="{{ selectedSport }}"></span> {{ selectedSport }}

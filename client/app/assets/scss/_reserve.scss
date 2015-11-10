@@ -1,15 +1,33 @@
 #reserve-page {
-  .mainButton {
-    margin: 10px;
+  .timeButton {
+    margin: 20px;
     background-color: $secondaryColor;
     color: $mainColor;
   }
-  .mainButton:hover {
+  .timeButton:hover {
     color: $secondaryColor;
     background-color: $mainColor;
   }
-  .mainButton.active {
+  .timeButton.active {
     background-color: $mainColor;
     color: $secondaryColor;
   }
+  .actionButton {
+    background-color: $secondaryColor;
+    color: $mainColor;
+  }
+  .actionButton:hover {
+    color: $secondaryColor;
+    background-color: $mainColor;
+  }
+  uib-datepicker{
+    margin-top: 20px;
+    span.text-info {
+      background-color: $secondaryColor;
+    }
+  }
+  .times {
+    margin-top: 20px;
+  }
+
 }
