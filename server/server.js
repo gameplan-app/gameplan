@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 // AUTH INIT
 app.use(session({
-  secret: 'this is the greenfield'
+  secret: process.env.SESSION_SECRET
 }));
 app.use(passport.initialize()); // initialize passport
 app.use(passport.session()); // to support persistent login sessions
