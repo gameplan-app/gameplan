@@ -1,9 +1,20 @@
 angular.module('gameplan.account', [])
 
 .controller("AccountController", ["$scope", "$location", "Account", function($scope, $location, Account) {
+  $scope.reservations = [];
   $scope.loadReservations = function() {
-    Account.loadReservations($scope.user.fbUserId, function (res) {
-      console.log(res);
+    Account.loadReservations($scope.user.fbUserId, function(res) {
+      res.forEach(function(r){
+        str = moment(r.date).format("DDMMYYYY") + r.time;
+        r.date = moment(str, "DDMMYYYYHH").calendar();
+        r.names = [];
+        r.usersInvited.forEach(function (user){
+          r.names.push(user.name);
+        })
+        r.names = r.names.join(", ");
+        $scope.reservations.push(r);
+        
+      })
     })
   };
 
@@ -11,21 +22,22 @@ angular.module('gameplan.account', [])
 }])
 
 .factory("Account", ["$http", function($http) {
-  var loadReservations = function (user) {
+  var loadReservations = function(user, callback) {
     $http({
-      url: "/account",
-      method: "GET",
-      params: ({
-        user_fb_id: user 
+        url: "/account",
+        method: "GET",
+        params: ({
+          user_fb_id: user
+        })
       })
-    })
-    .then(function successCallback(resp) {
-      console.log("Resp", resp);
-      return resp;
-    }, function errorCallback(resp) {
-      console.log(resp.status, "failed to fetch user reservations");
-    })};
+      .then(function successCallback(resp) {
+        callback(resp.data);
+      }, function errorCallback(resp) {
+        console.log(resp.status, "failed to fetch user reservations");
+      })
+  };
 
-    return {loadReservations: loadReservations};
-  }
-])
+  return {
+    loadReservations: loadReservations
+  };
+}])

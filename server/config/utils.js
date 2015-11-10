@@ -28,7 +28,6 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbPicture": res.req.user.photos[0].value,
     "fbEmails": res.req.user.emails
   };
-  console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
@@ -166,7 +165,7 @@ function addRes(place, date, time,user, usersInvited) {
     {
       $push: {
         "reservations": {
-          place_name: place,
+          place_id: place,
           date: date,
           time: time,
           usersInvited: usersInvited
@@ -192,6 +191,7 @@ exports.siteReserve = function(req, res) {
       .exec(function(err, result) {
         if (err) console.error(err);
         if (result.length === 0) {
+          console.log("invited users", req.body.usersInvited)
           addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
@@ -240,12 +240,12 @@ exports.getAllUsers = function (req, res) {
 
 
 exports.getUserAccount = function (req, res) {
-  var user_reservations = [];
   User.find({"user_fb_id": req.query.user_fb_id})
   .exec(function (err, results){
     if (err) console.error(error);
+    var user_reservations = [];
     _.each(results[0].reservations, function (reservation, i) {
-      Site.find({"site_place_id": reservation.place})
+      Site.find({"site_place_id": reservation.place_id})
       .exec(function (err, result){
         user_reservations.push({
           sitename: result[0].sitename,
@@ -253,7 +253,7 @@ exports.getUserAccount = function (req, res) {
           time: reservation.time,
           usersInvited: reservation.usersInvited
         })
-        if (user_reservations.length === result.length) {
+        if (user_reservations.length === results[0].reservations.length) {
           res.status(200).send(user_reservations);
         }
       });

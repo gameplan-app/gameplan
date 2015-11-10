@@ -4,6 +4,7 @@
 angular.module('gameplan', [
   'ngRoute',
   'ngCookies',
+  'smart-table',
   'gameplan.home',
   'gameplan.reservation',
   'gameplan.account'
