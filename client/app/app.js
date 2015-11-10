@@ -4,8 +4,10 @@
 angular.module('gameplan', [
   'ngRoute',
   'ngCookies',
+  'smart-table',
   'gameplan.home',
-  'gameplan.reservation'
+  'gameplan.reservation',
+  'gameplan.account'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

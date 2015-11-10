@@ -19,9 +19,9 @@ describe('', function() {
       .end(function(err, res) {
 
     // Delete objects from db so they can be created later for the test
-        Site.remove({
-          sitename: 'BBall Court'
-        }).exec();
+        // Site.remove({
+        //   sitename: 'BBall Court'
+        // }).exec();
 
         done();
       });
@@ -80,6 +80,7 @@ describe('', function() {
           })
           .expect(200)
           .expect(function (res){
+            console.log(res.body.reserved_hours);
             var test_res = res.body.reserved_hours.indexOf(20) > 0 && res.body.reserved_hours.indexOf(9) > 0  ;
             expect(test_res).to.be.true;
           })
@@ -93,7 +94,18 @@ describe('', function() {
       .expect(200)
       .expect(function (res){
         // console.log(res.body);
-        expect(res.body).to.be.instanceOf(Object)
+        expect(res.body).to.be.instanceOf(Object);
+      })
+      .end(done);
+    })
+
+    it('returns users reservations from db', function (done){
+      request(app)
+      .get('/account')
+      .expect(200)
+      .expect(function (res){
+        console.log(res.body);
+        expect(res.body).to.be.instanceOf(Object);
       })
       .end(done);
     })

@@ -30,7 +30,6 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
       }
     }
     $scope.userListForEmail.push(user);
-    console.log($scope.userListForEmail);
   }
 
   $scope.today();
@@ -115,8 +114,9 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
   service.sendTimes = function(date, venue, time, callback, $scope) {
     var userEmails = [];
     _.each($scope.userListForEmail, function (user) {
-      userEmails.push({name:user[0], email:user[1]});
+      userEmails.push({name:user.username, email:user.emails[0].value});
     });
+    console.log("userEmails", userEmails);
     $http({
       url: '/reserve',
       method: 'POST',

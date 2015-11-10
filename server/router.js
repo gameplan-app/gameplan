@@ -20,6 +20,7 @@ router.post('/checkout', utils.siteCheckout);
 router.post('/reserve', utils.siteReserve);
 router.get('/reserve*', utils.siteDayAvailability);
 router.get('/users', utils.getAllUsers);
+router.get('/account', utils.getUserAccount);
 
 // AUTH
 router.get('/auth/facebook/callback',

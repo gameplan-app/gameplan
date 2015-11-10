@@ -27,6 +27,10 @@ var userSchema = new mongoose.Schema({
   emails: {
     type: Array,
     required: false
+  },
+  reservations: {
+    type: Array,
+    requred:false
   }
 
 });

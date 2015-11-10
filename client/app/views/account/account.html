@@ -1,0 +1,26 @@
+<div class="account-container"> 
+  <div class="reservations">
+    <div class="res-heading">
+      <h3>Your Upcoming Reservations</h3>
+    </div>
+    <table st-table="reservations" class="table">
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Friends Invited</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="res in reservations">
+          <td>{{res.sitename}}</td>
+          <td>{{res.date}}</td>
+          <td>{{res.names}}</td>
+        </tr>
+      </tbody>
+      
+    </table>
+
+  </div>
+
+</div>

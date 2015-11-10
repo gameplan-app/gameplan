@@ -28,7 +28,6 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbPicture": res.req.user.photos[0].value,
     "fbEmails": res.req.user.emails
   };
-  //console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
@@ -183,6 +182,25 @@ function addRes(place, date, time, user, usersInvited) {
         res.status(400).send("error making reservation");
       }
     })
+
+  User.findOneAndUpdate({"user_fb_id": user},
+    {
+      $push: {
+        "reservations": {
+          place_id: place,
+          date: date,
+          time: time,
+          usersInvited: usersInvited
+        }
+      }
+    },
+    {upsert:true, new: true},
+    function (err, result) {
+      if (err) {
+        console.error(err);
+        res.status(400).send("error adding reservation to user account");
+      }
+    })
 }
 
 exports.siteReserve = function(req, res) {
@@ -241,3 +259,37 @@ exports.getAllUsers = function(req, res) {
     res.status(200).send(result);
   })
 };
+
+
+exports.getUserAccount = function (req, res) {
+  User.find({"user_fb_id": req.query.user_fb_id})
+  .exec(function (err, results){
+    if (err) console.error(error);
+    var user_reservations = [];
+    _.each(results[0].reservations, function (reservation, i) {
+      Site.find({"site_place_id": reservation.place_id})
+      .exec(function (err, result){
+        user_reservations.push({
+          sitename: result[0].sitename,
+          date: reservation.date,
+          time: reservation.time,
+          usersInvited: reservation.usersInvited
+        })
+        if (user_reservations.length === results[0].reservations.length) {
+          res.status(200).send(user_reservations);
+        }
+      });
+    });
+    
+  })
+}
+
+
+
+
+
+
+
+
+
+
