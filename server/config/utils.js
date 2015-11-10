@@ -28,7 +28,7 @@ exports.fetchUserInfoFromFB = function(req, res) { // Get User info from FB
     "fbPicture": res.req.user.photos[0].value,
     "fbEmails": res.req.user.emails
   };
-  console.log(fbUserInfo);
+  //console.log(fbUserInfo);
   res.cookie('facebook', fbUserInfo); // Set user info in cookies
   exports.postUserInfo(fbUserInfo);
   res.redirect('/');
@@ -53,7 +53,7 @@ exports.postSiteInfo = function(req, res) { // interact with db to post site's i
   var newSite = {
     'site_place_id': req.body.place_id,
     'sitename': req.body.name,
-    'address':req.body.vicinity,
+    'address': req.body.vicinity,
     'checkins': 0
   };
   siteCreate(newSite);
@@ -101,12 +101,9 @@ exports.siteCheckout = function(req, res) { //  update site checkin count and re
   });
 };
 
-//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
+//EMAIL CONFIRMATION
 
-//EMAIL CONFIRMATION | GAMEPLAN 2.0 FEATURE
-
-exports.emailConfirmation = function(email, court, reservationTime, reservationDate, address) {
-
+function emailConfirmation(user_id, reservationDateStr, reservationTimeArr, site_id) {
   //Setup Nodemail Transport
   var smtpTransport = nodemailer.createTransport("SMTP", {
     service: "Gmail",
@@ -116,45 +113,70 @@ exports.emailConfirmation = function(email, court, reservationTime, reservationD
     }
   });
 
-  mailOpts = {
-    from: "game.plan.schedule@gmail.com",
-    to: email,
-    subject: "Gameplan Schedule on " + reservationDate + " at " + reservationTime + "!",
-    text: "Hi," +
-      "\nYou have successfully reserved a court! Have fun!" +
-      "\n Court : " + court +
-      "\n When : " + reservationTime + " on " + reservationDate +
-      "\n Where : " + address +
-      "\n" +
-      "Game Time!\n" +
-      "-Gameplan Team"
+  //EMAIL SETTINGS
+
+  var emailObj = {
+    reservationDate: reservationDateStr,
+    reservationTime: reservationTimeArr
   };
 
-  smtpTransport.sendMail(mailOpts, function(error) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email was sent!");
-    }
-  });
+  User.findOne({
+      "user_fb_id": user_id
+    }, 'username emails').exec(function(err, results) {
+      emailObj.user_email = results.emails[0].value;
+    })
+    .then(function(user) {
+      Site.findOne({
+          'site_place_id': site_id
+        }, 'sitename address').exec(function(err, results) {
+          emailObj.address = results.address;
+          emailObj.sitename = results.sitename;
+          mailOpts = {
+            from: "game.plan.schedule@gmail.com",
+            to: emailObj.user_email,
+            subject: "Gameplan Schedule on " + emailObj.reservationDate + "!",
+            text: "Hi," +
+              "\n\nYou have successfully reserved a court! Have fun!" +
+              "\n Court : " + emailObj.sitename +
+              "\n When : " + emailObj.reservationTime + " on " + emailObj.reservationDate +
+              "\n Where : " + emailObj.address +
+              "\nGame Time!\n" +
+              "-Gameplan Team"
+          };
+        })
+        .then(function(site) {
+          smtpTransport.sendMail(mailOpts, function(error) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email was sent!");
+            }
+          });
+        });
+    });
 };
 
 
-
-function addRes(place, date, time,user, usersInvited) {
+function addRes(place, date, time, user, usersInvited) {
   Site.findOneAndUpdate({
       'site_place_id': place
     },
     // add new reservation to existing site doc
-    {$push: {
+    {
+      $push: {
         "reservations": {
           date: date,
           time: time,
           user_id: user,
           usersInvited: usersInvited
-    }}},
+        }
+      }
+    },
     // upsert: create if it doesn't already exist, new: return updated doc
-    {upsert: true,new: true},
+    {
+      upsert: true,
+      new: true
+    },
     function(err, result) {
       if (err) {
         console.error(err);
@@ -164,7 +186,7 @@ function addRes(place, date, time,user, usersInvited) {
 }
 
 exports.siteReserve = function(req, res) {
-  req.body.time.forEach(function (time, i){
+  req.body.time.forEach(function(time, i) {
     Site.find({
         "site_place_id": req.body.site_name,
         "reservations.date": moment(req.body.date, "MMDDYYYY"),
@@ -174,6 +196,7 @@ exports.siteReserve = function(req, res) {
         if (err) console.error(err);
         if (result.length === 0) {
           addRes(req.body.site_name, moment(req.body.date, "MMDDYYYY"), time, req.body.user_id, req.body.usersInvited);
+          emailConfirmation(req.body.user_id, req.body.date, req.body.time, req.body.site_name);
           if (i === (req.body.time.length - 1)) {
             res.status(203).send();
           }
@@ -182,7 +205,7 @@ exports.siteReserve = function(req, res) {
         }
       });
   })
-  
+
 };
 
 exports.siteDayAvailability = function(req, res) {
@@ -206,28 +229,15 @@ exports.siteDayAvailability = function(req, res) {
         }
       });
     }
-    
+
     res.status(200).send({
       reserved_hours: reserved_hours
     });
   })
 };
 
-exports.getAllUsers = function (req, res) {
-  User.find({}, 'username photo emails', function (err, result) {
+exports.getAllUsers = function(req, res) {
+  User.find({}, 'username photo emails', function(err, result) {
     res.status(200).send(result);
   })
 };
-
-
-
-
-
-
-
-
-
-
-
-
-

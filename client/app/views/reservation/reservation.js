@@ -145,22 +145,5 @@ angular.module('gameplan.reservation', ['ui.bootstrap'])
     });
   }
 
-  // //send selected times to database
-  // service.sendTimes = function(date, venue, callback) {
-  //   $http({
-  //     url: '/reserve',
-  //     method: 'GET',
-  //     // params is how you pass data on a get request with angular
-  //     params: {
-  //       site_name: venue,
-  //       date: date
-  //     }
-  //   }).then(function successCallback(response) {
-  //     callback(response)
-  //   }, function errorCallback(response) {
-  //     callback(response)
-  //   });
-  // }
-
   return service;
 }])
